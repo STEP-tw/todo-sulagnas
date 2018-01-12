@@ -33,5 +33,15 @@ const handlePostLoginPage=function (req,res) {
   redirectToRequiredPage(req,res);
 }
 
+const redirectToIndexPage=function (res) {
+  res.redirect('index.html');
+}
+
+const handleLogout=function (req,res) {
+  res.setHeader('Set-Cookie',[`Expires=${new Date(1).toUTCString()}`,`sessionid=0, Expires=${new Date(1).toUTCString()}`]);
+  delete req.user.sessionid;
+  redirectToIndexPage(res);
+}
+exports.handleLogout=handleLogout;
 exports.handleGetYourTodo=handleGetYourTodo;
 exports.handlePostLoginPage=handlePostLoginPage;
