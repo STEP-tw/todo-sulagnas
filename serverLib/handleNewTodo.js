@@ -9,11 +9,17 @@ const storeInTodoStorage=function (todoStoragePath,todoInPublicPath,newTodo) {
   });
 };
 
-const storeNewTodo=function (todoDetails,userName) {
-  //todoDetails.userName=userName;
+const getTodoContent=function (todoDetails) {
+  let todoContentStr=JSON.stringify(todoDetails).replace(/\+/g,' ');
+  let moreThanOneItem=todoContentStr.replace(/%0D%0A/g,'","item":"')
+  return JSON.parse(moreThanOneItem);
+};
+
+const storeNewTodo=function (todoDetails) {
+  let todoContent=getTodoContent(todoDetails);
   const todoStoragePath='./data/todo.json';
   const todoInPublicPath='./public/js/todoStore.js'
-  storeInTodoStorage(todoStoragePath,todoInPublicPath,todoDetails);
+  storeInTodoStorage(todoStoragePath,todoInPublicPath,todoContent);
 };
 
 const writeInTodoStorage=function (todoStoragePath,todoList) {
@@ -24,12 +30,6 @@ const writeInTodoStorage=function (todoStoragePath,todoList) {
 const writeInPublicStorage=function (todoInPublicPath,todoList) {
   let todoToStore='let todoList='+JSON.stringify(todoList,null,2);
   fs.writeFile(todoInPublicPath,todoToStore,()=>{});
-};
-
-const redirectToPage=function (res,location){
-  const redirectLocation={'Location':location};
-  res.writeHead(302,redirectLocation);
-  res.end();
 };
 
 exports.storeNewTodo=storeNewTodo;

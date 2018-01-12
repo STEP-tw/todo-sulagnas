@@ -46,8 +46,7 @@ const handleLogout=function (req,res) {
 };
 
 const handleNewTodo=function (req,res) {
-  let user = req.user;
-  storeNewTodo(req.body,user.userName);
+  storeNewTodo(req.body);
   redirectToViewTodo(res);
 };
 
