@@ -1,10 +1,11 @@
 let storeNewTodo=require('./handleNewTodo.js').storeNewTodo;
 let registered_users=require('./preprocessor.js').registered_users;
+
 const redirectToLoginPage=function (res) {
   res.redirect('./loginPage.html');
 };
 
-const handleGetYourTodo=function (req,res) {
+const handleGetViewTodo=function (req,res) {
   if(!req.user){
     redirectToLoginPage(res);
   }
@@ -52,5 +53,5 @@ const handleNewTodo=function (req,res) {
 
 exports.handleNewTodo=handleNewTodo;
 exports.handleLogout=handleLogout;
-exports.handleGetYourTodo=handleGetYourTodo;
+exports.handleGetViewTodo=handleGetViewTodo;
 exports.handlePostLoginPage=handlePostLoginPage;

@@ -1,34 +1,17 @@
 let todoList=[
   {
-    "title": "hjgbjkhb",
-    "description": "hvhvhvhvvhvhvjvvhvhjvhvhvhv",
-    "item": "hjdhjshdfewhfghuiewhfubhvbhdvnjdnbvjdbfvhj+fuhvbiuhfbhuiof8bhjfj+bfdb+hfj"
+    "title": "shopping",
+    "description": "have+to+shop",
+    "item": "clothes"
   },
   {
-    "title": "vhvj",
-    "description": "jfvh",
-    "item": "jh"
-  },
-  {
-    "title": "ghj",
-    "description": "hjnkl",
-    "item": "hjk"
-  },
-  {
-    "title": "walk",
-    "description": "have+to+walk",
-    "item": "go+to+school"
+    "title": "shop",
+    "description": "have+to+shop",
+    "item": "clothes%0D%0Apen%0D%0Abook"
   },
   {
     "title": "reading",
     "description": "have+to+read",
-    "item": "have+to+read+book",
-    "userName": "sulagna"
-  },
-  {
-    "title": "shopping",
-    "description": "shop",
-    "item": "milk",
-    "userName": "sulagna"
+    "item": "book%0D%0AnewsPaper"
   }
 ]
