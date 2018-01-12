@@ -10,7 +10,7 @@ const storeInTodoStorage=function (todoStoragePath,todoInPublicPath,newTodo) {
 };
 
 const storeNewTodo=function (todoDetails,userName) {
-  todoDetails.userName=userName;
+  //todoDetails.userName=userName;
   const todoStoragePath='./data/todo.json';
   const todoInPublicPath='./public/js/todoStore.js'
   storeInTodoStorage(todoStoragePath,todoInPublicPath,todoDetails);
