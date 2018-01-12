@@ -1,13 +1,14 @@
+let storeNewTodo=require('./handleNewTodo.js').storeNewTodo;
 let registered_users=require('./preprocessor.js').registered_users;
 const redirectToLoginPage=function (res) {
   res.redirect('./loginPage.html');
-}
+};
 
 const handleGetYourTodo=function (req,res) {
   if(!req.user){
     redirectToLoginPage(res);
   }
-}
+};
 
 const getUserWithSessionId=function (res,user) {
   let sessionid = new Date().getTime();
@@ -17,7 +18,7 @@ const getUserWithSessionId=function (res,user) {
 
 const redirectToViewTodo=function (res) {
   res.redirect('./viewTodo.html')
-}
+};
 
 const redirectToRequiredPage=function (req,res) {
   let user = registered_users.find(u=>u.userName==req.body.userName);
@@ -31,17 +32,25 @@ const redirectToRequiredPage=function (req,res) {
 
 const handlePostLoginPage=function (req,res) {
   redirectToRequiredPage(req,res);
-}
+};
 
 const redirectToIndexPage=function (res) {
   res.redirect('index.html');
-}
+};
 
 const handleLogout=function (req,res) {
   res.setHeader('Set-Cookie',[`Expires=${new Date(1).toUTCString()}`,`sessionid=0, Expires=${new Date(1).toUTCString()}`]);
   delete req.user.sessionid;
   redirectToIndexPage(res);
-}
+};
+
+const handleNewTodo=function (req,res) {
+  let user = req.user;
+  storeNewTodo(req.body,user.userName);
+  redirectToViewTodo(res);
+};
+
+exports.handleNewTodo=handleNewTodo;
 exports.handleLogout=handleLogout;
 exports.handleGetYourTodo=handleGetYourTodo;
 exports.handlePostLoginPage=handlePostLoginPage;
