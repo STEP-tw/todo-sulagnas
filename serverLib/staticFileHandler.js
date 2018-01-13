@@ -31,11 +31,6 @@ const writeContentOfFile=function (req,res,path,content) {
 };
 
 const getContentOfFile=function (req,res,path) {
-  if(path=='./public/guestBook.html'){
-    if(!req.user){
-      path='./public/guestBookWithoutLogin.html';
-    }
-  }
   let content=fs.readFileSync(path);
   writeContentOfFile(req,res,path,content);
 };
