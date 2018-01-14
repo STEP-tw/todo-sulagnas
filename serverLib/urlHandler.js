@@ -1,4 +1,3 @@
-let handleTodo=require('../lib/todoHandler.js');
 let registered_users=require('./preprocessor.js').registered_users;
 let serveFile=require('./staticFileHandler.js');
 let getContentType=require('./contentType.js');
@@ -51,11 +50,6 @@ const handleLogout=function (req,res) {
   redirectToLoginPage(res);
 };
 
-const handleNewTodo=function (req,res) {
-  handleTodo(req.body);
-  redirectToViewTodo(res);
-};
-
 const handleGetLoginPage=function (req,res) {
   let path='./public/loginPage.html';
   let content=fs.readFileSync(path);
@@ -65,7 +59,6 @@ const handleGetLoginPage=function (req,res) {
 }
 
 exports.handleGetLoginPage=handleGetLoginPage;
-exports.handleNewTodo=handleNewTodo;
 exports.handleLogout=handleLogout;
 exports.handleGetViewTodo=handleGetViewTodo;
 exports.handlePostLoginPage=handlePostLoginPage;

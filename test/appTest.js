@@ -1,7 +1,6 @@
 let chai = require('chai');
 let assert = chai.assert;
 let request = require('./requestSimulator.js');
-process.env.COMMENT_STORE = "./testStore.json";
 let app = require('../app.js');
 let th = require('./testHelper.js');
 
@@ -45,14 +44,13 @@ describe('app',()=>{
     })
   })
 
-  describe.skip('GET /loginPage.html',()=>{
-    it('serves the login page with message for a failed login',done=>{
+  describe('GET /loginPage.html',()=>{
+    it('serves the login page with message for a failed login',function () {
       request(app,{method:'GET',url:'/loginPage.html',headers:{'cookie':'message=login failed'}},res=>{
         th.status_is_ok(res);
         th.body_contains(res,'userName:');
         th.body_contains(res,'login failed');
         th.should_not_have_cookie(res,'message');
-        done();
       })
     })
   })
@@ -66,7 +64,7 @@ describe('app',()=>{
     })
   })
 
-  describe.skip('POST /loginPage.html',()=>{
+  describe('POST /loginPage.html',()=>{
     it('redirects to loginPage.html with message for invalid user',done=>{
       request(app,{method:'POST',url:'/loginPage.html',body:'userName=badUser'},res=>{
         th.should_be_redirected_to(res,'./loginPage.html');
@@ -76,12 +74,4 @@ describe('app',()=>{
     })
   })
 
-  describe.skip('POST /submitForm',()=>{
-    it('serves the javascript source',done=>{
-      request(app,{method:'POST',url:'/submitForm',body:'name=Foo&comment=Faa'},res=>{
-        th.should_be_redirected_to(res,'/guestBook');
-        done();
-      })
-    })
-  })
 })
