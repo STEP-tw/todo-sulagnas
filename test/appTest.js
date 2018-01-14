@@ -35,13 +35,12 @@ describe('app',()=>{
     })
   })
   describe('GET /loginPage.html',()=>{
-    it('serves the login page',done=>{
+    it('serves the login page',function () {
       request(app,{method:'GET',url:'/loginPage.html'},res=>{
         th.status_is_ok(res);
         th.body_contains(res,'userName:');
         th.body_does_not_contain(res,'login failed');
         th.should_not_have_cookie(res,'message');
-        done();
       })
     })
   })

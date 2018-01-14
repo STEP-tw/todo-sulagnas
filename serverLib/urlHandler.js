@@ -1,4 +1,4 @@
-let storeNewTodo=require('./handleNewTodo.js').storeNewTodo;
+let handleTodo=require('../lib/todoHandler.js');
 let registered_users=require('./preprocessor.js').registered_users;
 let serveFile=require('./staticFileHandler.js');
 let getContentType=require('./contentType.js');
@@ -52,7 +52,7 @@ const handleLogout=function (req,res) {
 };
 
 const handleNewTodo=function (req,res) {
-  storeNewTodo(req.body);
+  handleTodo(req.body);
   redirectToViewTodo(res);
 };
 
