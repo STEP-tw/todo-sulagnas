@@ -27,6 +27,7 @@ let loadUser = (req,res)=>{
     req.user = user;
   }
 };
+
 exports.registered_users=registered_users;
 exports.logRequest=logRequest;
 exports.loadUser=loadUser;

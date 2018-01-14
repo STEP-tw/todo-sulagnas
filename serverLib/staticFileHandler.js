@@ -1,25 +1,11 @@
 let fs = require('fs');
+let getContentType=require('./contentType.js');
 
-const getContentType=function (fileName) {
-  let extension=fileName.split('.').pop();
-  let contentType={
-    'html':'text/html',
-    'css':'text/css',
-    'js':'text/js',
-    'pdf':'application/pdf',
-    'gif':'img/gif',
-    'jpg':'img/jpg'
-  }
-  if(contentType[extension])
-    return contentType[extension];
-  return 'text/plain';
-};
-
-const getPath=function (req) {
-  if(req.url=='/'||req.url=='/index.html'){
+const getPath=function (url) {
+  if(url=='/'||url=='/index.html'){
     return './public/index.html';
   }
-  return req.url.replace('/','./public/');
+  return url.replace('/','./public/');
 };
 
 const writeContentOfFile=function (req,res,path,content) {
@@ -42,7 +28,7 @@ const handleIfFileNotExist=function (res) {
 };
 
 const serveFile=function (req,res) {
-  let path=getPath(req);
+  let path=getPath(req.url);
   try{
     getContentOfFile(req,res,path);
   }catch(err){

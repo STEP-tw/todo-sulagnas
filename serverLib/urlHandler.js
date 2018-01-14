@@ -1,5 +1,12 @@
 let storeNewTodo=require('./handleNewTodo.js').storeNewTodo;
 let registered_users=require('./preprocessor.js').registered_users;
+let serveFile=require('./staticFileHandler.js');
+let getContentType=require('./contentType.js');
+let fs=require('fs');
+
+const redirectToViewTodo=function (res) {
+  res.redirect('./viewTodo.html')
+};
 
 const redirectToLoginPage=function (res) {
   res.redirect('./loginPage.html');
@@ -8,7 +15,9 @@ const redirectToLoginPage=function (res) {
 const handleGetViewTodo=function (req,res) {
   if(!req.user){
     redirectToLoginPage(res);
+    return;
   }
+  serveFile(req,res);
 };
 
 const getUserWithSessionId=function (res,user) {
@@ -17,13 +26,10 @@ const getUserWithSessionId=function (res,user) {
   user.sessionid = sessionid;
 };
 
-const redirectToViewTodo=function (res) {
-  res.redirect('./viewTodo.html')
-};
-
 const redirectToRequiredPage=function (req,res) {
   let user = registered_users.find(u=>u.userName==req.body.userName);
   if(!user) {
+    res.setHeader('Set-Cookie',`message=login failed; Max-Age=5`);
     redirectToLoginPage(res);
     return;
   }
@@ -36,13 +42,13 @@ const handlePostLoginPage=function (req,res) {
 };
 
 const redirectToIndexPage=function (res) {
-  res.redirect('index.html');
+  res.redirect('loginPage.html');
 };
 
 const handleLogout=function (req,res) {
   res.setHeader('Set-Cookie',[`Expires=${new Date(1).toUTCString()}`,`sessionid=0, Expires=${new Date(1).toUTCString()}`]);
   delete req.user.sessionid;
-  redirectToIndexPage(res);
+  redirectToLoginPage(res);
 };
 
 const handleNewTodo=function (req,res) {
@@ -50,6 +56,15 @@ const handleNewTodo=function (req,res) {
   redirectToViewTodo(res);
 };
 
+const handleGetLoginPage=function (req,res) {
+  let path='./public/loginPage.html';
+  let content=fs.readFileSync(path);
+  res.setHeader('Content-Type',getContentType(path));
+  res.write(req.cookies.message||'');
+  res.write(content);
+}
+
+exports.handleGetLoginPage=handleGetLoginPage;
 exports.handleNewTodo=handleNewTodo;
 exports.handleLogout=handleLogout;
 exports.handleGetViewTodo=handleGetViewTodo;

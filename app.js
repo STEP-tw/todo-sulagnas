@@ -9,9 +9,9 @@ app.use(preprocessor.logRequest);
 app.use(preprocessor.loadUser);
 
 app.get('/viewTodo.html',urlHandler.handleGetViewTodo);
+app.get('/loginPage.html',urlHandler.handleGetLoginPage);
 app.get('/logout',urlHandler.handleLogout);
 app.post('/loginPage.html',urlHandler.handlePostLoginPage);
 app.post('/addTodo.html',urlHandler.handleNewTodo);
-app.useAsPostProcessor(serveFile);
 
 module.exports=app;

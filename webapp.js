@@ -1,3 +1,5 @@
+const serveFile=require('./serverLib/staticFileHandler');
+
 const toKeyValue = kv=>{
     let parts = kv.split('=');
     return {key:parts[0].trim(),value:parts[1].trim()};
@@ -27,14 +29,16 @@ const parseCookies = text=> {
 
 let invoke = function(req,res){
   let handler = this._handlers[req.method][req.url];
-  if(handler)
-    handler(req,res);
+  if(!handler){
+    serveFile(req,res);
+    return;
+  }
+  handler(req,res);
 };
 
 const initialize = function(){
   this._handlers = {GET:{},POST:{}};
   this._preprocess = [];
-  this._postprocess = [];
 };
 
 const get = function(url,handler){
@@ -72,10 +76,6 @@ const main = function(req,res){
     });
     if(res.finished) return;
     invoke.call(this,req,res);
-    this._postprocess.forEach(middleware=>{
-      if(res.finished) return;
-      middleware(req,res);
-    });
   });
 };
 
