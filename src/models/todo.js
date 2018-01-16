@@ -7,6 +7,15 @@ class Todo {
     this.todoItems=[];
     this.itemCount=0;
   }
+  getId() {
+    return this.id;
+  }
+  getTitle() {
+    return this.title;
+  }
+  getDescription() {
+    return this.description;
+  }
   getCurrentItemId() {
     return this.itemCount++;
   }
@@ -18,25 +27,29 @@ class Todo {
   getItemIndex(id) {
     return this.todoItems.findIndex(item=>item.id==id);
   }
+  getTodoItem(itemId) {
+    let itemIndex=this.getItemIndex(itemId);
+    return this.todoItems[itemIndex];
+  }
   deleteTodoItem(itemId) {
-    let indexOfItem=this.getItemIndex(itemId);
-    delete this.todoItems.splice(indexOfItem,1);
+    let itemIndex=this.getItemIndex(itemId);
+    delete this.todoItems.splice(itemIndex,1);
   }
   editTodoItem(itemId,editedTodoItem) {
-    let indexOfItem=this.getItemIndex(itemId);
-    this.todoItems[indexOfItem].editTodoItem(editedTodoItem);
+    let itemIndex=this.getItemIndex(itemId);
+    this.todoItems[itemIndex].editTodoItem(editedTodoItem);
   }
   markAsDone(itemId) {
-    let indexOfItem=this.getItemIndex(itemId);
-    this.todoItems[indexOfItem].markAsDone();
+    let itemIndex=this.getItemIndex(itemId);
+    this.todoItems[itemIndex].markAsDone();
   }
   markAsUndone(itemId) {
-    let indexOfItem=this.getItemIndex(itemId);
-    this.todoItems[indexOfItem].markAsUndone();
+    let itemIndex=this.getItemIndex(itemId);
+    this.todoItems[itemIndex].markAsUndone();
   }
   isDone(itemId) {
-    let indexOfItem=this.getItemIndex(itemId);
-    return this.todoItems[indexOfItem].done;
+    let itemIndex=this.getItemIndex(itemId);
+    return this.todoItems[itemIndex].done;
   }
 }
 

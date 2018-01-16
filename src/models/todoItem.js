@@ -4,6 +4,12 @@ class TodoItem {
     this.done=false;
     this.id=id;
   }
+  getItem() {
+    return this.item;
+  }
+  getId() {
+    return this.id;
+  }
   editTodoItem(editedTodoItem) {
     this.item=editedTodoItem;
   }
@@ -12,6 +18,9 @@ class TodoItem {
   }
   markAsUndone() {
     this.done=false;
+  }
+  isDone() {
+    return this.done;
   }
 }
 

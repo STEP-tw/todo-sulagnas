@@ -1,12 +1,20 @@
 let assert = require('chai').assert;
 const Todo=require('../src/models/todo.js');
 
-describe("a todo with it's title description and todo items",function () {
+describe("a todo with it's id title description todo items and item count",function () {
+
+  describe('todo has a id',function () {
+    let shopping=new Todo(1,'shopping','have to buy things');
+    it('has an id',function () {
+      assert.equal(shopping.getId(),1);
+    })
+  })
+
   describe('todo has a title',function () {
     let shopping=new Todo(1,'shopping','have to buy things');
     shopping.addTodoItem('buy clothes');
     it('has a title',function () {
-      assert.equal(shopping.title,'shopping');
+      assert.equal(shopping.getTitle(),'shopping');
     })
   })
 
@@ -15,7 +23,7 @@ describe("a todo with it's title description and todo items",function () {
     shopping.addTodoItem('buy clothes');
 
     it('has a description',function () {
-      assert.equal(shopping.description,'have to buy things');
+      assert.equal(shopping.getDescription(),'have to buy things');
     })
   })
 
@@ -24,7 +32,17 @@ describe("a todo with it's title description and todo items",function () {
     shopping.addTodoItem('buy clothes');
     shopping.addTodoItem('buy book');
     it('can add the todo item in todo',function () {
-      assert.equal(shopping.todoItems[1].item,'buy book');
+      assert.equal(shopping.getTodoItem(1).getItem(),'buy book');
+    })
+  })
+
+  describe('item count will increment every time user add one item',function () {
+    let shopping=new Todo(1,'shopping','have to buy things');
+    shopping.addTodoItem('buy clothes');
+    shopping.addTodoItem('buy book');
+    shopping.addTodoItem('buy pen');
+    it('can add the todo item in todo',function () {
+      assert.equal(shopping.itemCount,3);
     })
   })
 
@@ -37,7 +55,7 @@ describe("a todo with it's title description and todo items",function () {
       assert.equal(shopping.todoItems.length,2);
       shopping.deleteTodoItem(0);
       assert.equal(shopping.todoItems.length,1);
-      assert.equal(shopping.todoItems[0].item,'buy mobile');
+      assert.equal(shopping.getTodoItem(1).getItem(),'buy mobile');
     })
   })
 
@@ -47,21 +65,7 @@ describe("a todo with it's title description and todo items",function () {
     shopping.editTodoItem(0,'buy book');
 
     it('can change the todo item in todo',function () {
-      assert.equal(shopping.todoItems[0].item,'buy book');
-    })
-  })
-
-  describe('todo item can be done or undone',function () {
-    let shopping=new Todo(1,'shopping','have to buy things');
-    shopping.addTodoItem('buy clothes');
-
-    it('can select any todo item',function () {
-      shopping.markAsDone(0);
-      assert.isOk(shopping.todoItems[0].done);
-    })
-    it('can unselect any todo item',function () {
-      shopping.markAsUndone(0);
-      assert.isNotOk(shopping.todoItems[0].done);
+      assert.equal(shopping.getTodoItem(0).getItem(),'buy book');
     })
   })
 
