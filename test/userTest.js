@@ -1,5 +1,5 @@
 let assert = require('chai').assert;
-const User=require('../lib/user.js');
+const User=require('../appModels/user.js');
 
 describe('a todo list with one or more more todos',function () {
 

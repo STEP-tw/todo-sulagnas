@@ -1,5 +1,5 @@
 let assert = require('chai').assert;
-const TodoItem=require('../lib/todoItem.js');
+const TodoItem=require('../appModels/todoItem.js');
 
 describe('todo item has one item and a id',function () {
   let storyBook=new TodoItem(1,'buy story book');

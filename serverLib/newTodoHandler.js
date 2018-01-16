@@ -1,7 +1,7 @@
 let fs=require('fs');
-let User=require('../lib/user.js');
+let User=require('../appModels/user.js');
 const sulagna=new User('sulagna');
-const getTodoObj=require('../lib/todoHandler.js').handleTodo;
+const getTodoObj=require('../appModels/todoHandler.js').handleTodo;
 
 const getTodoList=function (user) {
   let todoList=[];

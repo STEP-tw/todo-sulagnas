@@ -1,5 +1,5 @@
 let assert = require('chai').assert;
-const Todo=require('../lib/todo.js');
+const Todo=require('../appModels/todo.js');
 
 describe("a todo with it's title description and todo items",function () {
   describe('todo has a title',function () {
