@@ -1,7 +1,7 @@
 let assert = require('chai').assert;
-const TodoItem=require('../appModels/todoItem.js');
+const TodoItem=require('../src/models/todoItem.js');
 
-describe('todo item has one item and a id',function () {
+describe('todo item has one item ,status and a id',function () {
   let storyBook=new TodoItem(1,'buy story book');
 
   it('has one item',function () {
@@ -12,15 +12,24 @@ describe('todo item has one item and a id',function () {
   })
 })
 
+describe('todoItem can be edited',function () {
+  let storyBook=new TodoItem(1,'buy story book');
+
+  it('todoItem can be edited',function () {
+    storyBook.editTodoItem('buy two story book');
+    assert.equal(storyBook.item,'buy two story book');
+  })
+})
+
 describe('todoItem can be selected on not selected',function (){
   let storyBook=new TodoItem(1,'buy story book');
 
   it('can select one todo item',function(){
-    storyBook.doneItem();
+    storyBook.markAsDone();
     assert.equal(storyBook.done,true);
   })
   it('can unselect one todo item',function(){
-    storyBook.undoneItem();
+    storyBook.markAsUndone();
     assert.equal(storyBook.done,false);
   })
 })

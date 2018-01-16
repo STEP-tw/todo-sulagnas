@@ -1,4 +1,4 @@
-const serveFile=require('./serverLib/staticFileHandler');
+const serveFile=require('./src/lib/staticFileHandler');
 
 const toKeyValue = kv=>{
     let parts = kv.split('=');

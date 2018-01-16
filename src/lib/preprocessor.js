@@ -1,7 +1,7 @@
 let fs=require('fs');
 const timeStamp = require('./time.js').timeStamp;
 const getRegistered_users=function () {
-  let userDetails=fs.readFileSync('./userDetails/userDetails.json');
+  let userDetails=fs.readFileSync('./data/userDetails.json','utf8');
   return JSON.parse(userDetails);
 }
 

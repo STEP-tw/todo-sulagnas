@@ -1,5 +1,5 @@
 let assert = require('chai').assert;
-const Todo=require('../appModels/todo.js');
+const Todo=require('../src/models/todo.js');
 
 describe("a todo with it's title description and todo items",function () {
   describe('todo has a title',function () {
@@ -56,11 +56,11 @@ describe("a todo with it's title description and todo items",function () {
     shopping.addTodoItem('buy clothes');
 
     it('can select any todo item',function () {
-      shopping.doneTodoItem(0);
+      shopping.markAsDone(0);
       assert.isOk(shopping.todoItems[0].done);
     })
     it('can unselect any todo item',function () {
-      shopping.undoneTodoItem(0);
+      shopping.markAsUndone(0);
       assert.isNotOk(shopping.todoItems[0].done);
     })
   })
@@ -70,12 +70,12 @@ describe("a todo with it's title description and todo items",function () {
     shopping.addTodoItem('buy clothes');
 
     it('can return true if the todo item is done',function () {
-      shopping.doneTodoItem(0);
-      assert.isOk(shopping.isDoneTodoItem(0));
+      shopping.markAsDone(0);
+      assert.isOk(shopping.isDone(0));
     })
     it('can return false if the todo item is undone',function () {
-      shopping.undoneTodoItem(0);
-      assert.isNotOk(shopping.isDoneTodoItem(0));
+      shopping.markAsUndone(0);
+      assert.isNotOk(shopping.isDone(0));
     })
   })
 })

@@ -4,10 +4,13 @@ class TodoItem {
     this.done=false;
     this.id=id;
   }
-  doneItem() {
+  editTodoItem(editedTodoItem) {
+    this.item=editedTodoItem;
+  }
+  markAsDone() {
     this.done=true;
   }
-  undoneItem() {
+  markAsUndone() {
     this.done=false;
   }
 }
