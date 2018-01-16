@@ -3,16 +3,15 @@ const Todo=require('../lib/todo.js');
 
 describe("a todo with it's title description and todo items",function () {
   describe('todo has a title',function () {
-    let shopping=new Todo('shopping','have to buy things');
+    let shopping=new Todo(1,'shopping','have to buy things');
     shopping.addTodoItem('buy clothes');
-
     it('has a title',function () {
       assert.equal(shopping.title,'shopping');
     })
   })
 
   describe('todo has a description',function () {
-    let shopping=new Todo('shopping','have to buy things');
+    let shopping=new Todo(1,'shopping','have to buy things');
     shopping.addTodoItem('buy clothes');
 
     it('has a description',function () {
@@ -21,69 +20,62 @@ describe("a todo with it's title description and todo items",function () {
   })
 
   describe('todo item can be added',function () {
-    let shopping=new Todo('shopping','have to buy things');
+    let shopping=new Todo(1,'shopping','have to buy things');
     shopping.addTodoItem('buy clothes');
-
+    shopping.addTodoItem('buy book');
     it('can add the todo item in todo',function () {
-      shopping.addTodoItem('buy book');
-      let newTodoItem='buy book';
-      assert.equal(shopping.todoItems[newTodoItem].item,'buy book');
+      assert.equal(shopping.todoItems[1].item,'buy book');
     })
   })
 
   describe('todo item can be deleted',function () {
-    let shopping=new Todo('shopping','have to buy things');
+    let shopping=new Todo(1,'shopping','have to buy things');
     shopping.addTodoItem('buy clothes');
+    shopping.addTodoItem('buy mobile');
 
     it('can delete any todo item in todo',function () {
-      shopping.deleteTodoItem('buy clothes');
-      let deletedTodoItem='buy clothes';
-      assert.isUndefined(shopping.todoItems[deletedTodoItem]);
+      assert.equal(shopping.todoItems.length,2);
+      shopping.deleteTodoItem(0);
+      assert.equal(shopping.todoItems.length,1);
+      assert.equal(shopping.todoItems[0].item,'buy mobile');
     })
   })
 
   describe('todo item can be edited',function () {
-    let shopping=new Todo('shopping','have to buy things');
+    let shopping=new Todo(1,'shopping','have to buy things');
     shopping.addTodoItem('buy clothes');
+    shopping.editTodoItem(0,'buy book');
 
     it('can change the todo item in todo',function () {
-      shopping.editTodoItem('buy clothes','buy book');
-      let newTodoItem='buy book';
-      let oldTodoItem='buy clothes';
-      assert.equal(shopping.todoItems[newTodoItem].item,'buy book');
-      assert.isUndefined(shopping.todoItems[oldTodoItem]);
+      assert.equal(shopping.todoItems[0].item,'buy book');
     })
   })
 
-  describe('todo item can be selected or unselected',function () {
-    let shopping=new Todo('shopping','have to buy things');
+  describe('todo item can be done or undone',function () {
+    let shopping=new Todo(1,'shopping','have to buy things');
     shopping.addTodoItem('buy clothes');
 
     it('can select any todo item',function () {
-      shopping.selectTodoItem('buy clothes');
-      let selectedTodoItem='buy clothes';
-      assert.isOk(shopping.todoItems[selectedTodoItem].status);
+      shopping.doneTodoItem(0);
+      assert.isOk(shopping.todoItems[0].done);
     })
     it('can unselect any todo item',function () {
-      shopping.unselectTodoItem('buy clothes');
-      let unselectedTodoItem='buy clothes';
-      assert.isNotOk(shopping.todoItems[unselectedTodoItem].status);
+      shopping.undoneTodoItem(0);
+      assert.isNotOk(shopping.todoItems[0].done);
     })
   })
-  
-  describe('it can say if the todo item is selected or not',function () {
-    let shopping=new Todo('shopping','have to buy things');
+
+  describe('it can say if the todo item is done or not',function () {
+    let shopping=new Todo(1,'shopping','have to buy things');
     shopping.addTodoItem('buy clothes');
 
-    it('can return true if the todo item is selected',function () {
-      shopping.selectTodoItem('buy clothes');
-      let selectedTodoItem='buy clothes';
-      assert.isOk(shopping.todoItems[selectedTodoItem].status);
+    it('can return true if the todo item is done',function () {
+      shopping.doneTodoItem(0);
+      assert.isOk(shopping.isDoneTodoItem(0));
     })
-    it('can return false if the todo item is unselected',function () {
-      shopping.unselectTodoItem('buy clothes');
-      let unselectedTodoItem='buy clothes';
-      assert.isNotOk(shopping.todoItems[unselectedTodoItem].status);
+    it('can return false if the todo item is undone',function () {
+      shopping.undoneTodoItem(0);
+      assert.isNotOk(shopping.isDoneTodoItem(0));
     })
   })
 })

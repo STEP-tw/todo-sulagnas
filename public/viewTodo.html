@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="./css/styleSheet.css">
+    <script src="./js/todoStore.js" charset="utf-8"></script>
+    <script src="./js/todoRender.js" charset="utf-8"></script>
   </head>
   <body>
     <p id="heading">
@@ -13,7 +15,10 @@
     <a href="addTodo.html">add your new todo</a><br>
     <a href="logout">logout</a>
     <hr>
-    <table id="showTodo">
-    </table>
+    <div id="showTodo" onclick="showTodoDetail()">
+      <p id="description"></p>
+      <p id="todoItem"></p>
+      <p id="buttons"></p>
+    </div>
   </body>
 </html>

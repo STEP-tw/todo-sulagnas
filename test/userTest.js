@@ -5,94 +5,82 @@ describe('a todo list with one or more more todos',function () {
 
   describe('user has todos in it',function () {
     it('has todos in it',function () {
-      let user=new User('user');
+      let user=new User(1,'sulagna');
       user.addTodo('shopping','have to buy things');
-      user.addTodoItemInList('shopping','buy clothes');
       user.addTodo('dinner','have to eat pizza');
-      user.addTodoItemInList('dinner','buy pizza');
-
-      let todoTitleList=['shopping','dinner'];
-      assert.isDefined(user[todoTitleList[0]]);
-      assert.isDefined(user[todoTitleList[1]]);
+      user.addTodoItemOfTodo(0,'buy clothes');
+      user.addTodoItemOfTodo(1,'buy pizza');
+      assert.equal(user.todos.length,2);
     })
   })
 
   describe('user can add todo in it',function () {
-    let user=new User('user');
+    let user=new User(1,'sulagna');
     user.addTodo('shopping','have to buy things');
-    user.addTodoItemInList('shopping','buy clothes');
+    user.addTodoItemOfTodo(0,'buy clothes');
+    user.addTodo('play','have to play');
+    user.addTodoItemOfTodo(1,'play cricket');
 
     it('can add todo in it',function () {
-      user.addTodo('play','have to play');
-      assert.equal(user.play.title,'play');
-      assert.equal(user.play.description,'have to play');
+      assert.equal(user.todos[1].title,'play');
+      assert.equal(user.todos[1].description,'have to play');
     })
     it('can add todo items in it',function () {
-      user.addTodo('play','have to play');
-      user.addTodoItemInList('play','play cricket');
-      let todoItem='play cricket';
-      assert.equal(user.play.title,'play');
-      assert.equal(user.play.description,'have to play');
-      assert.equal(user.play.todoItems[todoItem].item,'play cricket');
+      assert.equal(user.todos[1].title,'play');
+      assert.equal(user.todos[1].description,'have to play');
+      assert.equal(user.todos[1].todoItems[0].item,'play cricket');
     })
   })
 
   describe('user can add,delete or edit todo item in a todo',function () {
-    let user=new User('user');
+    let user=new User(1,'sulagna');
     user.addTodo('shopping','have to buy things');
-    user.addTodoItemInList('shopping','buy clothes');
+    user.addTodoItemOfTodo(0,'buy clothes');
+    user.addTodoItemOfTodo(0,'buy mobile');
 
-    it('can add todo item in a specific todo',function () {
-      user.addTodoItemInList('shopping','buy mobile');
-      let todoItem='buy mobile';
-      assert.equal(user.shopping.todoItems[todoItem].item,'buy mobile');
+    it('can add todo item in a todo',function () {
+      assert.equal(user.todos[0].todoItems[1].item,'buy mobile');
     })
     it('can delete todo item in a specific todo',function () {
-      user.addTodoItemInList('shopping','buy mobile');
-      user.deleteTodoItemInList('shopping','buy mobile');
-      let todoItem='buy mobile';
-      assert.isUndefined(user.shopping.todoItems[todoItem]);
+      assert.equal(user.todos[0].todoItems.length,2);
+      user.deleteTodoItemOfTodo(0,1);
+      assert.equal(user.todos[0].todoItems.length,1);
     })
     it('can edit todo item in a specific todo',function () {
-      user.editTodoItemInList('shopping','buy clothes','buy mobile');
-      let newTodoItem='buy mobile';
-      assert.equal(user.shopping.todoItems[newTodoItem].item,'buy mobile');
+      user.editTodoItemOfTodo(0,0,'buy mobile');
+      assert.equal(user.todos[0].todoItems[0].item,'buy mobile');
     })
   })
 
-  describe('user can select or unselect todo items in their todo',function () {
-    let user=new User('user');
+  describe('user can done or undone todo items in their todo',function () {
+    let user=new User(1,'user');
     user.addTodo('shopping','have to buy things');
-    user.addTodoItemInList('shopping','buy clothes');
+    user.addTodoItemOfTodo(0,'buy clothes');
+    user.addTodoItemOfTodo(0,'buy mobile');
 
-    it('can select any todoItem in their todo',function () {
-      user.selectTodoItemInList('shopping','buy clothes');
-      let todoItem='buy clothes';
-      assert.equal(user.shopping.todoItems[todoItem].status,true);
+    it('can done any todoItem in their todo',function () {
+      user.doneTodoItemOfTodo(0,0);
+      assert.isOk(user.todos[0].todoItems[0].done);
     })
-    it('can unselect any todoItem in their todo',function () {
-      user.unselectTodoItemInList('shopping','buy clothes');
-      let todoItem='buy clothes';
-      assert.equal(user.shopping.todoItems[todoItem].status,false);
+    it('can undone any todoItem in their todo',function () {
+      user.undoneTodoItemOfTodo(0,1);
+      assert.isNotOk(user.todos[0].todoItems[1].done);
     })
   })
 
-  describe('user can know if any item is selected or not',function () {
-    let user=new User('user');
+  describe('user can know if any item is doneed or not',function () {
+    let user=new User(1,'user');
     user.addTodo('shopping','have to buy things');
-    user.addTodoItemInList('shopping','buy clothes');
+    user.addTodoItemOfTodo(0,'buy clothes');
+    user.addTodoItemOfTodo(0,'buy mobile');
 
-    it('user can know if they have selected any item',function () {
-      user.selectTodoItemInList('shopping','buy clothes');
-      user.isSelectedTodoItemInList('shopping','buy clothes');
-      let todoItem='buy clothes';
-      assert.equal(user.shopping.todoItems[todoItem].status,true);
+    it('user can know if they have doneed any item',function () {
+      user.doneTodoItemOfTodo(0,0);
+      assert.isOk(user.isDoneTodoItemOfTodo(0,0));
     })
-    it('user can know if they have not selected any item',function () {
-      user.unselectTodoItemInList('shopping','buy clothes');
-      user.isSelectedTodoItemInList('shopping','buy clothes');
-      let todoItem='buy clothes';
-      assert.equal(user.shopping.todoItems[todoItem].status,false);
+    it('user can know if they have not doneed any item',function () {
+      user.undoneTodoItemOfTodo(0,1);
+      assert.isNotOk(user.isDoneTodoItemOfTodo(0,1));
     })
   })
 })
