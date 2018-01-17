@@ -9,14 +9,24 @@ const showTodos=function () {
     let title=document.createElement('h3');
     let line=document.createElement('hr');
     title.innerText=todo.todos[0].title;
+    title.onclick=function(){showTodoDetail(todo)};
     showDetail.appendChild(title);
     showTodo.appendChild(line);
   })
 };
 
-const showTodoDetail=function () {
-  let description=document.getElementById('description');
-  alert('hello')
+const showTodoDetail=function (todo) {
+  let showDescription=document.getElementById('showDescription');
+  let description=document.createElement('h4');
+  description.innerText=todo.todos[0].description;
+  showDescription.appendChild(description);
+  let todoItem=document.getElementById('TodoItem');
+  let todoItems=todo.todos[0].todoItems;
+  todoItems.forEach(function (eachItem) {
+    let item=document.createElement('p');
+    item.innerText=eachItem.item;
+    todoItem.appendChild(item);
+  })
 };
 
 window.onload=showTodos;
