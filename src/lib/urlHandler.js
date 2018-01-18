@@ -1,5 +1,4 @@
 let registered_users=require('./preprocessor.js').registered_users;
-let serveFile=require('./staticFileHandler.js');
 let getContentType=require('./contentType.js');
 let fs=require('fs');
 let todoHandler=require('./todoHandler.js');
@@ -9,15 +8,7 @@ const redirectToViewTodo=function (res) {
 };
 
 const redirectToLoginPage=function (res) {
-  res.redirect('./loginPage.html');
-};
-
-const handleGetViewTodo=function (req,res) {
-  if(!req.user){
-    redirectToLoginPage(res);
-    return;
-  }
-  serveFile(req,res);
+  res.redirect('./login');
 };
 
 const getUserWithSessionId=function (res,user) {
@@ -69,5 +60,4 @@ const handlePostAddTodo=function (req,res) {
 exports.handlePostAddTodo=handlePostAddTodo;
 exports.handleGetLoginPage=handleGetLoginPage;
 exports.handleLogout=handleLogout;
-exports.handleGetViewTodo=handleGetViewTodo;
 exports.handlePostLoginPage=handlePostLoginPage;

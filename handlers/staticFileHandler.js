@@ -1,12 +1,15 @@
 let DefaultHandler=require('./defaultHandler.js');
 
 class staticFileHandler extends DefaultHandler {
-  constructor(fs,root) {
+  constructor(root,fs) {
     super();
     this.fs=fs;
     this.root=root;
   }
   getPath(url) {
+    if(url=='/'){
+      return `./${this.root}${url}loginPage.html`;
+    }
     return `./${this.root}${url}`;
   }
   getContentType(filePath) {
