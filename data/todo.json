@@ -5,19 +5,12 @@
     "todos": [
       {
         "id": 0,
-        "title": "shopping",
-        "description": "have to buy things",
-        "todoItems": [],
-        "itemCount": 0
-      },
-      {
-        "id": 1,
-        "title": "walk",
-        "description": "walking is good",
+        "title": "fhjkl",
+        "description": "jghkl%3B",
         "todoItems": [],
         "itemCount": 0
       }
     ],
-    "todoCount": 2
+    "todoCount": 1
   }
 ]

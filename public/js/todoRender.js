@@ -5,7 +5,7 @@ const showTodos=function () {
   let showDetail=document.createElement('div');
   todoList.forEach(function (user) {
     showUserName.innerText=`hello...you are logged in as ${user.userName}`;
-    showTitleHeading.innerText='your todos are :-';
+    showTitleHeading.innerText='To view your todo completely click on the todo title...\nyour todos are :-';
     user.todos.forEach(function (todo,index) {
       let title=document.createElement('h3');
       title.innerText=`${index+1}. ${todo.title}`;
