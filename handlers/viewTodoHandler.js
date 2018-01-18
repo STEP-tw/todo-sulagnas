@@ -10,7 +10,7 @@ class viewTodoHandler extends DefaultHandler{
     return `./${this.root}${url}`;
   }
   redirectToLoginPage(res) {
-    res.redirect('./login');
+    res.redirect('./loginPage.html');
   }
   getContentType(path) {
     let extension=path.split('.').pop();

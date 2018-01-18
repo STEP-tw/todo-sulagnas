@@ -21,6 +21,9 @@ class User {
     let newTodo=new Todo(currentTodoId,title,description);
     this.todos.push(newTodo);
   }
+  getTodoIndex(id) {
+    return this.todos.findIndex(todo=>todo.id==id);
+  }
   getTodo(todoId) {
     let todoIndex=this.getTodoIndex(todoId);
     return this.todos[todoIndex];
@@ -41,11 +44,10 @@ class User {
     let todoIndex=this.getTodoIndex(todoId);
     delete this.todos.splice(todoIndex,1);
   }
-  getTodoIndex(id) {
-    return this.todos.findIndex(todo=>todo.id==id);
-  }
   addTodoItem(todoId,newTodoItem) {
     let todoIndex=this.getTodoIndex(todoId);
+    console.log(todoId);
+    console.log(todoIndex);
     this.todos[todoIndex].addTodoItem(newTodoItem);
   }
   getTodoItem(todoId,itemId) {

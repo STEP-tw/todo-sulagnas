@@ -3,10 +3,7 @@ const User=require('../models/user.js');
 let fs=require('fs');
 let todoApp=new TodoApp();
 todoApp.addUser('sulagna');
-
-const getUser=function () {
-  return todoApp.getUser(0);
-};
+let sulagna=todoApp.getUser(0);
 
 const getTodosOf=function (sulagna) {
   let todoList=[];
@@ -22,9 +19,14 @@ const storeTodoOf=function (sulagna) {
 };
 
 const makeNewTodo=function (title,description) {
-  let sulagna=getUser();
   sulagna.addTodo(title,description);
   storeTodoOf(sulagna);
 };
 
+const addNewTodoItem=function (id,item) {
+  console.log(sulagna);
+  sulagna.addTodoItem(id,item);
+  storeTodoOf(sulagna);
+};
+exports.addNewTodoItem=addNewTodoItem;
 exports.makeNewTodo=makeNewTodo;

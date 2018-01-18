@@ -28,6 +28,26 @@ const showTodoDetail=function (todo,index,title) {
     item.innerText=`${index+1}.${eachItem.item}`;
     title.appendChild(item);
   })
+  let itemForm=document.createElement('form');
+  itemForm.method='POST';
+  let itemBox=document.createElement('input');
+  itemBox.type='text';
+  itemBox.name='item';
+  itemForm.appendChild(itemBox);
+  let itemId=document.createElement('input');
+  itemId.style.visibility='hidden';
+  itemId.name='itemId';
+  itemForm.appendChild(itemId);
+  let addItemButton=document.createElement('input');
+  addItemButton.type='submit';
+  addItemButton.value='add todo item';
+  addItemButton.onclick=function(){sendTodoId(todo,itemId)}
+  itemForm.appendChild(addItemButton);
+  title.appendChild(itemForm);
 };
+
+const sendTodoId=function (todo,itemId) {
+  itemId.value=todo.id;
+}
 
 window.onload=showTodos;

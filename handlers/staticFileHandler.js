@@ -8,7 +8,7 @@ class staticFileHandler extends DefaultHandler {
   }
   getPath(url) {
     if(url=='/'){
-      return `./${this.root}${url}loginPage.html`;
+      return `./${this.root}${url}index.html`;
     }
     return `./${this.root}${url}`;
   }
@@ -26,16 +26,14 @@ class staticFileHandler extends DefaultHandler {
       return contentType[extension];
     return 'text/plain';
   }
-  writeContentOfFile(req,res,path,content) {
-    res.setHeader('Content-Type',this.getContentType(path));
-    if(path=='./public/guestBook.html')
-      res.write(`<p><b>hello ${req.user.name}</b></p>`);
+  writeContentOfFile(req,res,content) {
     res.write(content);
     res.end();
   }
   getContentOfFile(req,res,path) {
     let content=this.fs.readFileSync(path);
-    this.writeContentOfFile(req,res,path,content);
+    res.setHeader('Content-Type',this.getContentType(path));
+    this.writeContentOfFile(req,res,content);
   }
   handleIfFileNotExist(res) {
     res.statusCode=404;
@@ -47,6 +45,7 @@ class staticFileHandler extends DefaultHandler {
     try{
       this.getContentOfFile(req,res,path);
     }catch(err){
+      console.log(err.message);
       this.handleIfFileNotExist(res);
     }
   }

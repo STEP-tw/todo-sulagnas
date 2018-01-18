@@ -5,26 +5,28 @@
     "todos": [
       {
         "id": 0,
-        "title": "fgjhkl",
-        "description": "ghvjbn",
-        "todoItems": [],
-        "itemCount": 0
-      },
-      {
-        "id": 1,
-        "title": "tfhyjgukh",
-        "description": "hjk",
-        "todoItems": [],
-        "itemCount": 0
-      },
-      {
-        "id": 2,
-        "title": "hj",
-        "description": "hgvj",
-        "todoItems": [],
-        "itemCount": 0
+        "title": "sleep",
+        "description": "sleep is imp",
+        "todoItems": [
+          {
+            "item": "at night",
+            "done": false,
+            "id": 0
+          },
+          {
+            "item": "at noon",
+            "done": false,
+            "id": 1
+          },
+          {
+            "item": "in the morning",
+            "done": false,
+            "id": 2
+          }
+        ],
+        "itemCount": 3
       }
     ],
-    "todoCount": 3
+    "todoCount": 1
   }
 ]

@@ -8,7 +8,15 @@ const redirectToViewTodo=function (res) {
 };
 
 const redirectToLoginPage=function (res) {
-  res.redirect('./login');
+  res.redirect('./loginPage.html');
+};
+
+const handleGetViewTodo=function (req,res) {
+  if(!req.user){
+    redirectToLoginPage(res);
+    return;
+  }
+  serveFile(req,res);
 };
 
 const getUserWithSessionId=function (res,user) {
@@ -57,7 +65,15 @@ const handlePostAddTodo=function (req,res) {
   redirectToViewTodo(res);
 };
 
+const handlePostViewTodo=function (req,res) {
+  let item=req.body.item;
+  let id=req.body.itemId;
+  todoHandler.addNewTodoItem(id,item);
+}
+
+exports.handlePostViewTodo=handlePostViewTodo;
 exports.handlePostAddTodo=handlePostAddTodo;
 exports.handleGetLoginPage=handleGetLoginPage;
 exports.handleLogout=handleLogout;
+exports.handleGetViewTodo=handleGetViewTodo;
 exports.handlePostLoginPage=handlePostLoginPage;
