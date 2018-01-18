@@ -1,31 +1,32 @@
 const showTodos=function () {
   let showTodo=document.getElementById('showTodo');
-  let showUserName=document.getElementById('showUserName');
-  let showDetail=document.getElementById('showDetail');
-  todoList.forEach(function (todo) {
-    let userName=document.createElement('h2');
-    userName.innerText=`hello...you are logged in as ${todo.userName}`;
-    showUserName.appendChild(userName);
-    let title=document.createElement('h3');
-    let line=document.createElement('hr');
-    title.innerText=todo.todos[0].title;
-    title.onclick=function(){showTodoDetail(todo)};
-    showDetail.appendChild(title);
-    showTodo.appendChild(line);
+  let showUserName=document.createElement('h2');
+  let showTitleHeading=document.createElement('h3');
+  let showDetail=document.createElement('div');
+  todoList.forEach(function (user) {
+    showUserName.innerText=`hello...you are logged in as ${user.userName}`;
+    showTitleHeading.innerText='your todos are :-';
+    user.todos.forEach(function (todo,index) {
+      let title=document.createElement('h3');
+      title.innerText=`${index+1}. ${todo.title}`;
+      showDetail.appendChild(title);
+      title.onclick=function(){showTodoDetail(todo,index,showDetail)};
+    })
+    showTodo.appendChild(showUserName);
+    showTodo.appendChild(showTitleHeading);
+    showTodo.appendChild(showDetail);
   })
 };
 
-const showTodoDetail=function (todo) {
-  let showDescription=document.getElementById('showDescription');
+const showTodoDetail=function (todo,index,title) {
   let description=document.createElement('h4');
-  description.innerText=todo.todos[0].description;
-  showDescription.appendChild(description);
-  let todoItem=document.getElementById('TodoItem');
-  let todoItems=todo.todos[0].todoItems;
-  todoItems.forEach(function (eachItem) {
+  description.innerText=`description of '${todo.title}' is :-\n${todo.description}`;
+  title.appendChild(description);
+  let todoItems=todo.todoItems;
+  todoItems.forEach(function (eachItem,index) {
     let item=document.createElement('p');
-    item.innerText=eachItem.item;
-    todoItem.appendChild(item);
+    item.innerText=`${index+1}.${eachItem.item}`;
+    title.appendChild(item);
   })
 };
 

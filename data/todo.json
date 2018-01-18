@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": 0,
+    "userName": "sulagna",
+    "todos": [
+      {
+        "id": 0,
+        "title": "shopping",
+        "description": "have to buy things",
+        "todoItems": [],
+        "itemCount": 0
+      },
+      {
+        "id": 1,
+        "title": "walk",
+        "description": "walking is good",
+        "todoItems": [],
+        "itemCount": 0
+      }
+    ],
+    "todoCount": 2
+  }
+]

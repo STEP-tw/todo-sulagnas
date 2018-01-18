@@ -2,6 +2,7 @@ let registered_users=require('./preprocessor.js').registered_users;
 let serveFile=require('./staticFileHandler.js');
 let getContentType=require('./contentType.js');
 let fs=require('fs');
+let todoHandler=require('./todoHandler.js');
 
 const redirectToViewTodo=function (res) {
   res.redirect('./viewTodo.html')
@@ -56,8 +57,16 @@ const handleGetLoginPage=function (req,res) {
   res.setHeader('Content-Type',getContentType(path));
   res.write(req.cookies.message||'');
   res.write(content);
-}
+};
 
+const handlePostAddTodo=function (req,res) {
+  let title=req.body.title;
+  let description=req.body.description;
+  todoHandler.makeNewTodo(title,description);
+  redirectToViewTodo(res);
+};
+
+exports.handlePostAddTodo=handlePostAddTodo;
 exports.handleGetLoginPage=handleGetLoginPage;
 exports.handleLogout=handleLogout;
 exports.handleGetViewTodo=handleGetViewTodo;
