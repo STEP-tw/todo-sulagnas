@@ -9,9 +9,6 @@ class viewTodoHandler extends DefaultHandler{
   getPath(url) {
     return `./${this.root}${url}`;
   }
-  redirectToLoginPage(res) {
-    res.redirect('./loginPage.html');
-  }
   getContentType(path) {
     let extension=path.split('.').pop();
     let contentType={
@@ -30,7 +27,7 @@ class viewTodoHandler extends DefaultHandler{
   }
   execute(req,res) {
     if(!req.user){
-      this.redirectToLoginPage(res);
+      this.redirectTo(res,'./loginPage.html');
       return;
     }
     this.writeContentOfFile(res,req.url);

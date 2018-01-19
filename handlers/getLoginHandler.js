@@ -1,6 +1,6 @@
 let DefaultHandler=require('./defaultHandler.js');
 
-class getLoginHandler extends DefaultHandler {
+class GetLoginHandler extends DefaultHandler {
   constructor(root,fs) {
     super();
     this.root=root;
@@ -26,4 +26,4 @@ class getLoginHandler extends DefaultHandler {
     res.write(content);
   }
 }
-module.exports=getLoginHandler;
+module.exports=GetLoginHandler;

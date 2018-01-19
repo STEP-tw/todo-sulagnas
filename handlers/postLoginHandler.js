@@ -18,12 +18,6 @@ class postLoginHandler extends DefaultHandler {
       return contentType[extension];
     return 'text/plain';
   }
-  redirectToViewTodo (res) {
-    res.redirect('./viewTodo.html')
-  }
-  redirectToLoginPage (res) {
-    res.redirect('./login');
-  }
   getUserWithSessionId (res,user) {
     let sessionid = new Date().getTime();
     res.setHeader('Set-Cookie',`sessionid=${sessionid}`);
@@ -33,11 +27,11 @@ class postLoginHandler extends DefaultHandler {
     let user = this.registered_users.find(u=>u.userName==req.body.userName);
     if(!user) {
       res.setHeader('Set-Cookie',`message=login failed; Max-Age=5`);
-      this.redirectToLoginPage(res);
+      this.redirectTo(res,'./loginPage.html');
       return;
     }
     this.getUserWithSessionId(res,user);
-    this.redirectToViewTodo(res);
+    this.redirectTo(res,'./viewTodo.html');
   }
   execute (req,res) {
     this.redirectToRequiredPage(req,res);
