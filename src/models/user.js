@@ -46,8 +46,6 @@ class User {
   }
   addTodoItem(todoId,newTodoItem) {
     let todoIndex=this.getTodoIndex(todoId);
-    console.log(todoId);
-    console.log(todoIndex);
     this.todos[todoIndex].addTodoItem(newTodoItem);
   }
   getTodoItem(todoId,itemId) {

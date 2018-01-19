@@ -94,7 +94,6 @@ describe('a user with id,userName,todoList of one or more todos',function () {
     user.addTodo('shopping','have to buy things');
     user.addTodoItem(0,'buy clothes');
     user.addTodoItem(0,'buy mobile');
-    console.log(user.todos[0].todoItems);
 
     it('user can know if they have done any item',function () {
       user.markAsDone(0,0);

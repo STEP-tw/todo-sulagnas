@@ -54,7 +54,7 @@ describe('app',()=>{
       })
     })
   })
-  describe.skip('POST /loginPage.html',()=>{
+  describe('POST /loginPage.html',()=>{
     it('redirects to viewTodo for valid user',done=>{
       request(app,{method:'POST',url:'/loginPage.html',body:'userName=sulagna'},res=>{
         th.should_be_redirected_to(res,'./viewTodo.html');
@@ -62,9 +62,6 @@ describe('app',()=>{
         done();
       })
     })
-  })
-
-  describe.skip('POST /loginPage.html',()=>{
     it('redirects to loginPage.html with message for invalid user',done=>{
       request(app,{method:'POST',url:'/loginPage.html',body:'userName=badUser'},res=>{
         th.should_be_redirected_to(res,'./loginPage.html');
@@ -73,5 +70,4 @@ describe('app',()=>{
       })
     })
   })
-
 })
