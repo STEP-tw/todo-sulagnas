@@ -29,6 +29,7 @@ let invoke = function(req,res){
   let handler = this._handlers[req.method][req.url];
   if(handler){
     handler(req,res);
+    res.end();
   }
   return;
 };
@@ -74,6 +75,7 @@ const main = function(req,res){
     });
     if(res.finished) return;
     invoke.call(this,req,res);
+    if(res.finished) return;
     this._postprocess.forEach(middleware=>{
       if(res.finished) return;
       middleware(req,res);

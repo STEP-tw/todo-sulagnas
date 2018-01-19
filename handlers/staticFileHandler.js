@@ -8,7 +8,7 @@ class staticFileHandler extends DefaultHandler {
   }
   getPath(url) {
     if(url=='/'){
-      return `./${this.root}${url}index.html`;
+      return `./${this.root}/index.html`;
     }
     return `./${this.root}${url}`;
   }
