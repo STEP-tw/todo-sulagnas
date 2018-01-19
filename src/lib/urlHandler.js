@@ -66,10 +66,10 @@ const handlePostAddTodo=function (req,res) {
 };
 
 const handlePostViewTodo=function (req,res) {
-  let item=req.body.item;
-  let id=req.body.itemId;
+  let item=req.body.itemForAdd;
+  let id=req.body.todoId;
   todoHandler.addNewTodoItem(id,item);
-}
+};
 
 exports.handlePostViewTodo=handlePostViewTodo;
 exports.handlePostAddTodo=handlePostAddTodo;

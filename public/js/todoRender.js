@@ -24,30 +24,76 @@ const showTodoDetail=function (todo,index,title) {
   title.appendChild(description);
   let todoItems=todo.todoItems;
   todoItems.forEach(function (eachItem,index) {
+
     let item=document.createElement('p');
     item.innerText=`${index+1}.${eachItem.item}`;
     title.appendChild(item);
+
+    let editButton=document.createElement('button');
+    editButton.innerText='edit';
+    item.appendChild(editButton);
+    editButton.onclick=function () {showEditOption(todo,eachItem,editButton)}
+    let deleteButton=document.createElement('button');
+    deleteButton.innerText='delete';
+    item.appendChild(deleteButton);
   })
-  let itemForm=document.createElement('form');
-  itemForm.method='POST';
+  let addItemForm=document.createElement('form');
+  addItemForm.method='POST';
+  title.appendChild(addItemForm);
+
   let itemBox=document.createElement('input');
   itemBox.type='text';
-  itemBox.name='item';
-  itemForm.appendChild(itemBox);
-  let itemId=document.createElement('input');
-  itemId.style.visibility='hidden';
-  itemId.name='itemId';
-  itemForm.appendChild(itemId);
+  itemBox.name='itemForAdd';
+  addItemForm.appendChild(itemBox);
+
+  let todoId=document.createElement('input');
+  todoId.style.visibility='hidden';
+  todoId.name='todoId';
+  addItemForm.appendChild(todoId);
+
   let addItemButton=document.createElement('input');
   addItemButton.type='submit';
   addItemButton.value='add todo item';
-  addItemButton.onclick=function(){sendTodoId(todo,itemId)}
-  itemForm.appendChild(addItemButton);
-  title.appendChild(itemForm);
+
+  addItemButton.onclick=function(){sendTodoId(todo,todoId)};
+  addItemForm.appendChild(addItemButton);
 };
 
-const sendTodoId=function (todo,itemId) {
-  itemId.value=todo.id;
+const sendTodoId=function (todo,todoId) {
+  todoId.value=todo.id;
+};
+
+const sendIdForEdit=function (todo,item,todoIdToEdit,editIdToEdit) {
+  todoIdToEdit.value=todo.id;
+  editIdToEdit.value=item.id;
+};
+
+const showEditOption=function (todo,eachItem,editButton) {
+  let editItemForm=document.createElement('form');
+  editItemForm.method='POST';
+  editButton.appendChild(editItemForm);
+
+  let todoIdToEdit=document.createElement('input');
+  todoIdToEdit.style.visibility='hidden';
+  todoIdToEdit.name='todoIdToEdit';
+  editItemForm.appendChild(todoIdToEdit);
+
+  let editIdToEdit=document.createElement('input');
+  editIdToEdit.style.visibility='hidden';
+  editIdToEdit.name='editIdToEdit';
+  editItemForm.appendChild(editIdToEdit);
+
+  let editedItemBox=document.createElement('input');
+  editedItemBox.type='text';
+  editedItemBox.name='itemForEdit';
+  editItemForm.appendChild(editedItemBox);
+
+  let editSubmitButton=document.createElement('input');
+  editSubmitButton.type='submit';
+  editSubmitButton.value='submit new todo';
+  editItemForm.appendChild(editSubmitButton);
+
+  editSubmitButton.onclick=function(){sendIdForEdit(todo,eachItem,todoIdToEdit,editIdToEdit)}
 }
 
 window.onload=showTodos;

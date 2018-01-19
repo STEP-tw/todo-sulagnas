@@ -5,26 +5,16 @@
     "todos": [
       {
         "id": 0,
-        "title": "sleep",
-        "description": "sleep is imp",
+        "title": "hjbhjgbhjs",
+        "description": "jugshjagsxaq",
         "todoItems": [
           {
-            "item": "at night",
+            "item": "xscssdv",
             "done": false,
             "id": 0
-          },
-          {
-            "item": "at noon",
-            "done": false,
-            "id": 1
-          },
-          {
-            "item": "in the morning",
-            "done": false,
-            "id": 2
           }
         ],
-        "itemCount": 3
+        "itemCount": 1
       }
     ],
     "todoCount": 1
