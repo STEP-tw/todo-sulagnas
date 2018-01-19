@@ -1,14 +1,9 @@
 let TodoItem=require('./todoItem.js');
 class Todo {
-  constructor(id,title,description) {
-    this.id=id;
+  constructor(title,description) {
     this.title=title;
     this.description=description;
-    this.todoItems=[];
-    this.itemCount=0;
-  }
-  getId() {
-    return this.id;
+    this.todoItems={};
   }
   getTitle() {
     return this.title;
@@ -16,40 +11,40 @@ class Todo {
   getDescription() {
     return this.description;
   }
-  getCurrentItemId() {
-    return this.itemCount++;
+  editTitle(newTitle){
+    this.title = newTitle;
   }
-  addTodoItem(todoItem) {
-    let currentItemId=this.getCurrentItemId();
-    let newTodoItem=new TodoItem(currentItemId,todoItem);
-    this.todoItems.push(newTodoItem);
+  editDescription(newDescription){
+    this.description = newDescription;
   }
-  getItemIndex(id) {
-    return this.todoItems.findIndex(item=>item.id==id);
+  addTodoItem(title) {
+    let newTodoItem=new TodoItem(title);
+    this.todoItems[title] = newTodoItem;
+  }
+  load(todoItems){
+    todoItems.map(todoItem=>{
+      this.addTodoItem(todoItem.item)
+    })
   }
   getTodoItem(itemId) {
-    let itemIndex=this.getItemIndex(itemId);
-    return this.todoItems[itemIndex];
+    return this.todoItems[itemId];
   }
   deleteTodoItem(itemId) {
-    let itemIndex=this.getItemIndex(itemId);
-    delete this.todoItems.splice(itemIndex,1);
+    delete this.todoItems[itemId];
   }
   editTodoItem(itemId,editedTodoItem) {
-    let itemIndex=this.getItemIndex(itemId);
-    this.todoItems[itemIndex].editTodoItem(editedTodoItem);
+    let item = this.getTodoItem(itemId);
+    this.addTodoItem(editedTodoItem);
+    this.deleteTodoItem(itemId);
   }
   markAsDone(itemId) {
-    let itemIndex=this.getItemIndex(itemId);
-    this.todoItems[itemIndex].markAsDone();
+    this.getTodoItem(itemId).markAsDone();
   }
   markAsUndone(itemId) {
-    let itemIndex=this.getItemIndex(itemId);
-    this.todoItems[itemIndex].markAsUndone();
+    this.getTodoItem(itemId).markAsUndone();
   }
   isDone(itemId) {
-    let itemIndex=this.getItemIndex(itemId);
-    return this.todoItems[itemIndex].done;
+    return this.getTodoItem(itemId).isDone();
   }
 }
 

@@ -1,16 +1,12 @@
 class TodoItem {
-  constructor(id,item) {
+  constructor(item) {
     this.item=item;
     this.done=false;
-    this.id=id;
   }
   getItem() {
     return this.item;
   }
-  getId() {
-    return this.id;
-  }
-  editTodoItem(editedTodoItem) {
+  edit(editedTodoItem) {
     this.item=editedTodoItem;
   }
   markAsDone() {

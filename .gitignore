@@ -1,6 +1,6 @@
 node_modules/
 *.log
 .DS_Store
-todo.json
+data/todo.json
 todoStore.js
 coverage

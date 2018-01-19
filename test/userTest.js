@@ -4,104 +4,97 @@ const User=require('../src/models/user.js');
 describe('a user with id,userName,todoList of one or more todos',function () {
 
   describe('a user will have id userName and todos.length',function () {
-    let user=new User(1,'sulagna');
+    let user=new User('sulagna');
 
-    it('has one id',function () {
-      assert.equal(user.getId(),1);
-    })
     it('has one userName',function () {
       assert.equal(user.getUserName(),'sulagna');
-    })
-    it('has keeps track on count of todos',function () {
-      user.addTodo('shopping','have to buy things');
-      user.addTodo('dinner','have to eat pizza');
-      assert.equal(user.todos.length,2);
     })
   })
 
   describe('user can add todo in it',function () {
-    let user=new User(1,'sulagna');
-    user.addTodo('shopping','have to buy things');
-    user.addTodoItem(0,'buy clothes');
-    user.addTodo('play','have to play');
-    user.addTodoItem(1,'play cricket');
-
+    beforeEach(()=>{
+      user=new User('sulagna');
+      user.addTodo('shopping','have to buy things');
+      user.addTodoItem('shopping','buy clothes');
+      user.addTodo('play','have to play');
+      user.addTodoItem('play','play cricket');
+    })
     it('can add todo in it',function () {
-      assert.equal(user.getTitle(1),'play');
-      assert.equal(user.getDescription(1),'have to play');
+      assert.equal(user.getTitle('play'),'play');
+      assert.equal(user.getDescription('play'),'have to play');
     })
     it('can add todo items in it',function () {
-      assert.equal(user.getTitle(1),'play');
-      assert.equal(user.getDescription(1),'have to play');
-      assert.equal(user.getTodoItem(1,0).getItem(),'play cricket');
+      assert.equal(user.getTitle('play'),'play');
+      assert.equal(user.getDescription('play'),'have to play');
+      assert.equal(user.getTodoItem('play','play cricket').getItem(),'play cricket');
     })
   })
 
   describe('user can edit todo title or description',function () {
-    let user=new User(1,'sulagna');
-    user.addTodo('shopping','have to buy things');
-
+    beforeEach(()=>{
+      user=new User('sulagna');
+      user.addTodo('shopping','have to buy things');
+    })
     it('user can edit todo title',function () {
-      user.editTitle(0,'buy things');
-      assert.equal(user.getTitle(0),'buy things');
+      user.editTitle('shopping','buy things');
+      assert.equal(user.getTitle('buy things'),'buy things');
     })
     it('user can edit todo description',function () {
-      user.editDescription(0,'need to buy things');
-      assert.equal(user.getDescription(0),'need to buy things');
+      user.editDescription('shopping','need to buy things');
+      assert.equal(user.getDescription('shopping'),'need to buy things');
     })
   })
 
   describe('user can delete one todo',function () {
-    let user=new User(1,'sulagna');
-    user.addTodo('shopping','have to buy things');
-    user.addTodoItem(0,'buy clothes');
-    user.addTodo('walk','walking is good for health');
-    user.addTodoItem(0,'morning walk');
-
+    beforeEach(()=>{
+      user=new User('sulagna');
+      user.addTodo('shopping','have to buy things');
+      user.addTodoItem('shopping','buy clothes');
+      user.addTodo('walk','walking is good for health');
+      user.addTodoItem('walk','morning walk');
+    })
     it('can delete one todo',function () {
-      assert.equal(user.todos.length,2)
-      user.deleteTodo(0);
-      assert.equal(user.todos.length,1);
-      assert.isUndefined(user.getTodo(0));
-      assert.isDefined(user.getTodo(1));
+      user.deleteTodo('shopping');
+      assert.isUndefined(user.getTodo('shopping'));
+      assert.isDefined(user.getTodo('walk'));
     })
   })
 
   describe('user can add,delete or edit todo item in a todo',function () {
-    let user=new User(1,'sulagna');
-    user.addTodo('shopping','have to buy things');
-    user.addTodoItem(0,'buy clothes');
-    user.addTodoItem(0,'buy mobile');
-
+    beforeEach(()=>{
+      user=new User('sulagna');
+      user.addTodo('shopping','have to buy things');
+      user.addTodoItem('shopping','buy clothes');
+      user.addTodoItem('shopping','buy mobile');
+    })
     it('can add todo item in a todo',function () {
-      assert.equal(user.getTodoItem(0,1).getItem(),'buy mobile');
+      assert.equal(user.getTodoItem('shopping','buy mobile').getItem(),'buy mobile');
     })
     it('can delete todo item in a specific todo',function () {
-      assert.equal(user.todos[0].todoItems.length,2);
-      user.deleteTodoItem(0,0);
-      assert.equal(user.todos[0].todoItems.length,1);
-      assert.isUndefined(user.getTodoItem(0,0));
-      assert.isDefined(user.getTodoItem(0,1));
+      user.deleteTodoItem('shopping','buy clothes');
+      assert.isUndefined(user.getTodoItem('shopping','buy clothes'));
+      assert.isDefined(user.getTodoItem('shopping','buy mobile'));
     })
     it('can edit todo item in a specific todo',function () {
-      user.editTodoItem(0,1,'buy mobile');
-      assert.equal(user.getTodoItem(0,1).getItem(),'buy mobile');
+      user.editTodoItem('shopping','buy mobile','buy samsung mobile');
+      assert.equal(user.getTodoItem('shopping','buy samsung mobile').getItem(),'buy samsung mobile');
     })
   })
 
   describe('user can know if any item is done or not',function () {
-    let user=new User(1,'user');
-    user.addTodo('shopping','have to buy things');
-    user.addTodoItem(0,'buy clothes');
-    user.addTodoItem(0,'buy mobile');
-
+    beforeEach(()=>{
+      user=new User('user');
+      user.addTodo('shopping','have to buy things');
+      user.addTodoItem('shopping','buy clothes');
+      user.addTodoItem('shopping','buy mobile');
+    })
     it('user can know if they have done any item',function () {
-      user.markAsDone(0,0);
-      assert.isOk(user.isDone(0,0));
+      user.markAsDone('shopping','buy clothes');
+      assert.isOk(user.isDone('shopping','buy clothes'));
     })
     it('user can know if they have not done any item',function () {
-      user.markAsUndone(0,1);
-      assert.isNotOk(user.isDone(0,1));
+      user.markAsUndone('shopping','buy mobile');
+      assert.isNotOk(user.isDone('shopping','buy mobile'));
     })
   })
 })

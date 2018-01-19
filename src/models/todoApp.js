@@ -2,19 +2,16 @@ const User=require('./user.js');
 
 class TodoApp {
   constructor() {
-    this.users=[];
+    this.users={};
     this.userCount=0;
   }
-  getCurrentUserId() {
-    return this.userCount++;
-  }
-  addUser(newUserName) {
-    let currentUserId=this.getCurrentUserId();
-    let newUser=new User(currentUserId,newUserName);
-    this.users.push(newUser);
+  addUser(newUserName,todos) {
+    let user = new User(newUserName);
+    todos && user.load(todos);
+    this.users[newUserName] = user;
   }
   getUser(id) {
-    return this.users.find(user=>user.id==id);
+    return this.users[id];
   }
 }
 

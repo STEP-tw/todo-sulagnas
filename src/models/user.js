@@ -1,76 +1,71 @@
 const Todo=require('./todo.js');
 
 class User {
-  constructor(id,userName) {
-    this.id=id;
+  constructor(userName) {
     this.userName=userName;
-    this.todos=[];
-    this.todoCount=0;
-  }
-  getId(){
-    return this.id;
+    this.todos={};
   }
   getUserName(){
     return this.userName;
   }
-  getCurrentTodoId() {
-    return this.todoCount++;
-  }
   addTodo(title,description){
-    let currentTodoId=this.getCurrentTodoId();
-    let newTodo=new Todo(currentTodoId,title,description);
-    this.todos.push(newTodo);
+    let newTodo=new Todo(title,description);
+    this.todos[title] = newTodo;
+    return newTodo;
   }
-  getTodoIndex(id) {
-    return this.todos.findIndex(todo=>todo.id==id);
+  load(todos){
+    todos.map((todo)=>{
+      let addedTodo = this.addTodo(todo.title,todo.description);
+      addedTodo.loadItems(todoItems);
+    });
   }
-  getTodo(todoId) {
-    let todoIndex=this.getTodoIndex(todoId);
-    return this.todos[todoIndex];
+  getTodo(title) {
+    return this.todos[title];
   }
   getTitle(todoId) {
-    return this.todos[todoId].getTitle();
+    return this.getTodo(todoId).getTitle();
   }
   getDescription(todoId) {
-    return this.todos[todoId].getDescription();
-  }
-  editTitle(todoId,newTitle) {
-    this.todos[todoId].title=newTitle;
-  }
-  editDescription(todoId,newDescription) {
-    this.todos[todoId].description=newDescription;
+    return this.getTodo(todoId).getDescription();
   }
   deleteTodo(todoId) {
-    let todoIndex=this.getTodoIndex(todoId);
-    delete this.todos.splice(todoIndex,1);
+    delete this.todos[todoId];
+  }
+  editTitle(todoId,newTitle) {
+    let oldTodo = this.getTodo(todoId);
+    this.addTodo(newTitle,oldTodo.description);
+    this.deleteTodo(todoId);
+  }
+  editDescription(todoId,newDescription) {
+    this.getTodo(todoId).editDescription(newDescription);
   }
   addTodoItem(todoId,newTodoItem) {
-    let todoIndex=this.getTodoIndex(todoId);
-    this.todos[todoIndex].addTodoItem(newTodoItem);
+    let todo=this.getTodo(todoId);
+    todo.addTodoItem(newTodoItem);
   }
   getTodoItem(todoId,itemId) {
-    let todoIndex=this.getTodoIndex(todoId);
-    return this.todos[todoIndex].getTodoItem(itemId);
+    let todo=this.getTodo(todoId);
+    return todo.getTodoItem(itemId);
   }
   deleteTodoItem(todoId,itemId) {
-    let todoIndex=this.getTodoIndex(todoId);
-    this.todos[todoIndex].deleteTodoItem(itemId);
+    let todo=this.getTodo(todoId);
+    todo.deleteTodoItem(itemId);
   }
   editTodoItem(todoId,itemId,editedTodoItem) {
-    let todoIndex=this.getTodoIndex(todoId);
-    this.todos[todoIndex].editTodoItem(itemId,editedTodoItem);
+    let todo=this.getTodo(todoId);
+    todo.editTodoItem(itemId,editedTodoItem);
   }
   markAsDone(todoId,itemId) {
-    let todoIndex=this.getTodoIndex(todoId);
-    this.todos[todoIndex].markAsDone(itemId);
+    let todo=this.getTodo(todoId);
+    todo.markAsDone(itemId);
   }
   markAsUndone(todoId,itemId) {
-    let todoIndex=this.getTodoIndex(todoId);
-    this.todos[todoIndex].markAsUndone(itemId);
+    let todo=this.getTodo(todoId);
+    todo.markAsUndone(itemId);
   }
   isDone(todoId,itemId) {
-    let todoIndex=this.getTodoIndex(todoId);
-    return this.todos[todoIndex].isDone(itemId);
+    let todo=this.getTodo(todoId);
+    return todo.isDone(itemId);
   }
 }
 module.exports=User;
