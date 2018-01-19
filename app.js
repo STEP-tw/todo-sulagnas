@@ -21,9 +21,6 @@ app.use(preprocessor.loadUser);
 
 app.get('/viewTodo.html',viewTodoHandler.getRequestHandler());
 app.post('/viewTodo.html',urlHandler.handlePostViewTodo);
-//app.get('/login',getLoginHandler.getRequestHandler());
-//app.get('/logout',logoutHandler.getRequestHandler());
-//app.post('/login',postLoginHandler.getRequestHandler());
 app.get('/loginPage.html',urlHandler.handleGetLoginPage);
 app.get('/logout',urlHandler.handleLogout);
 app.post('/loginPage.html',urlHandler.handlePostLoginPage);
