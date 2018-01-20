@@ -97,4 +97,75 @@ describe('a user with id,userName,todoList of one or more todos',function () {
       assert.isNotOk(user.isDone('shopping','buy mobile'));
     })
   })
+
+  describe('getAllTodos',()=>{
+    beforeEach(()=>{
+      user=new User('user');
+      user.addTodo('shopping','have to buy things');
+      user.addTodoItem('shopping','buy clothes');
+      user.addTodoItem('shopping','buy mobile');
+    })
+    it('should return the todos in a list',()=>{
+      let expected = [{
+        title:'shopping',
+        description:"have to buy things",
+        todoItems:[
+          {item:'buy clothes',done:false},
+          {item:'buy mobile',done:false}
+        ]}
+      ];
+      assert.deepEqual(user.getAllTodos(),expected);
+    });
+  });
+
+  describe("getDetails",()=>{
+    beforeEach(()=>{
+      user=new User('user');
+      user.addTodo('shopping','have to buy things');
+      user.addTodoItem('shopping','buy clothes');
+    })
+    it('should return an object contains user details',()=>{
+      let expected = {
+        userName:'user',
+        todos:[
+          {
+            title:"shopping",
+            description:'have to buy things',
+            todoItems:[{item:'buy clothes',done:false}]
+          }
+        ]
+      };
+      assert.deepEqual(user.getDetails(),expected);
+    })
+  })
+
+  describe('load',()=>{
+    beforeEach(()=>{
+      user=new User('user');
+      let todos = [
+        {
+          'title':'shopping',
+          description:"have to buy things",
+          todoItems:[
+            {item:'buy clothes',done:false},
+            {item:'buy mobile',done:false}
+          ]
+        }
+      ];
+      user.load(todos)
+    })
+    it("should add the todos to user object",()=>{
+      let expected = [
+        {
+          'title':'shopping',
+          description:"have to buy things",
+          todoItems:[
+            {item:'buy clothes',done:false},
+            {item:'buy mobile',done:false}
+          ]
+        }
+      ];
+      assert.deepEqual(user.getAllTodos(),expected);
+    })
+  })
 })

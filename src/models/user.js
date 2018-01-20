@@ -8,6 +8,16 @@ class User {
   getUserName(){
     return this.userName;
   }
+  getTodo(title) {
+    return this.todos[title];
+  }
+  getAllTodos(){
+    let allTodos = []
+    Object.keys(this.todos).forEach((title)=>{
+      allTodos.push(this.getTodo(title).getDetails());
+    });
+    return allTodos;
+  }
   addTodo(title,description){
     let newTodo=new Todo(title,description);
     this.todos[title] = newTodo;
@@ -16,11 +26,8 @@ class User {
   load(todos){
     todos.map((todo)=>{
       let addedTodo = this.addTodo(todo.title,todo.description);
-      addedTodo.loadItems(todoItems);
+      addedTodo.load(todo.todoItems);
     });
-  }
-  getTodo(title) {
-    return this.todos[title];
   }
   getTitle(todoId) {
     return this.getTodo(todoId).getTitle();
@@ -66,6 +73,12 @@ class User {
   isDone(todoId,itemId) {
     let todo=this.getTodo(todoId);
     return todo.isDone(itemId);
+  }
+  getDetails(){
+    let details = {};
+    details.userName = this.userName;
+    details.todos = this.getAllTodos();
+    return details;
   }
 }
 module.exports=User;

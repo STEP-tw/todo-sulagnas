@@ -9,6 +9,7 @@ class TodoApp {
     let user = new User(newUserName);
     todos && user.load(todos);
     this.users[newUserName] = user;
+    return user;
   }
   getUser(id) {
     return this.users[id];

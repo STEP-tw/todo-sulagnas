@@ -46,6 +46,20 @@ class Todo {
   isDone(itemId) {
     return this.getTodoItem(itemId).isDone();
   }
+  getAllItems(){
+    let allItems = [];
+    Object.keys(this.todoItems).forEach((title)=>{
+      allItems.push(this.getTodoItem(title));
+    })
+    return allItems;
+  }
+  getDetails(){
+    let details = {};
+    details.title = this.title;
+    details.description = this.description;
+    details.todoItems = this.getAllItems();
+    return details;
+  }
 }
 
 module.exports=Todo;

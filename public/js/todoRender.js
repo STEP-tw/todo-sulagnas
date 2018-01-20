@@ -60,12 +60,12 @@ const showTodoDetail=function (todo,index,title) {
 };
 
 const sendTodoId=function (todo,todoId) {
-  todoId.value=todo.id;
+  todoId.value=todo.title;
 };
 
 const sendIdForEdit=function (todo,item,todoIdToEdit,editIdToEdit) {
-  todoIdToEdit.value=todo.id;
-  editIdToEdit.value=item.id;
+  todoIdToEdit.value=todo.title;
+  editIdToEdit.value=item.item;
 };
 
 const showEditOption=function (todo,eachItem,editButton) {

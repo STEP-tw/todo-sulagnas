@@ -64,5 +64,38 @@ describe("a todo with it's id title description todo items and item count",funct
       shopping.markAsUndone('buy clothes');
       assert.isNotOk(shopping.isDone('buy clothes'));
     })
+  });
+
+  describe('getAllItems',()=>{
+    beforeEach(()=>{
+      shopping=new Todo('shopping','have to buy things');
+      shopping.addTodoItem('buy clothes');
+    })
+    it('should return all the items in a list',()=>{
+      let expected = [{item:'buy clothes',done:false}];
+      assert.deepEqual(shopping.getAllItems(),expected)
+    });
+  });
+
+  describe('getDetails',()=>{
+    beforeEach(()=>{
+      shopping=new Todo('shopping','have to buy things');
+      shopping.addTodoItem('buy clothes');
+    })
+    it('should return an object contains todo details',()=>{
+      let expected = {title:'shopping',description:'have to buy things',todoItems:[{item:'buy clothes',done:false}]};
+      assert.deepEqual(shopping.getDetails(),expected);
+    })
+  });
+
+  describe('load',()=>{
+    beforeEach(()=>{
+      shopping=new Todo('shopping','have to buy things');
+      shopping.load([{item:'buy clothes',done:false}]);
+    })
+    it('should add the items',()=>{
+      let expected = [{item:'buy clothes',done:false}];
+      assert.deepEqual(shopping.getAllItems(),expected);
+    });
   })
 })

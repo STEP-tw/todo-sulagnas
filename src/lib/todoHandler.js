@@ -7,7 +7,7 @@ let sulagna=todoApp.getUser('sulagna');
 
 const getTodosOf=function (sulagna) {
   let todoList=[];
-  todoList.push(sulagna);
+  todoList.push(sulagna.getDetails());
   let todos=JSON.stringify(todoList,null,2);
   return todos;
 };
@@ -24,7 +24,7 @@ const makeNewTodo=function (title,description) {
 };
 
 const addNewTodoItem=function (id,item) {
-  console.log(sulagna);
+  console.log(id,item);
   item = item.replace(/\+/g,' ')
   sulagna.addTodoItem(id,item);
   storeTodoOf(sulagna);
