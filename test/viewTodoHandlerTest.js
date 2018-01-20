@@ -1,12 +1,12 @@
 const assert = require('chai').assert;
-const ViewTodoHandler = require('../handlers/viewTodoHandler.js');
+const ViewTodoHandler = require('../handlers/listTodosHandler.js');
 const DummyFs = require('../src/utils/dummyFS.js');
 const testHelper = require('./testHelper.js');
 
-describe('viewTodoHandler',()=>{
+describe('listTodosHandler',()=>{
   beforeEach(()=>{
     fs = new DummyFs([{name:'./public/somefile.html',content:'this is somefile'}]);
-    viewTodoHandler = new ViewTodoHandler('public',fs);
+    listTodosHandler = new ViewTodoHandler('public',fs);
     res = {
       redirect:function(url){this.url = url;},
       write:function(text){this.content = text;},
@@ -17,20 +17,20 @@ describe('viewTodoHandler',()=>{
     res.headers = {};
   });
   it('should give the path of specific todo file when asked to get path',()=>{
-    assert.equal(viewTodoHandler.getPath('/viewTodo.html'),"./public/viewTodo.html");
+    assert.equal(listTodosHandler.getPath('/listTodos.html'),"./public/listTodos.html");
   });
   describe('getContentType',()=>{
     it("should return 'text/html' for html files",()=>{
-      let extension = viewTodoHandler.getContentType('./something.html');
+      let extension = listTodosHandler.getContentType('./something.html');
       assert.equal(extension,'text/html');
     });
     it("should return 'text/plain' for non-html files",()=>{
-      let extension = viewTodoHandler.getContentType('./something.txt');
+      let extension = listTodosHandler.getContentType('./something.txt');
       assert.equal(extension,'text/plain');
     });
   });
   it('should respond with the content of the file',()=>{
-    viewTodoHandler.writeContentOfFile(res,'/somefile.html');
+    listTodosHandler.writeContentOfFile(res,'/somefile.html');
     assert.deepEqual(res.headers,{'Content-Type':'text/html'});
     assert.equal(res.content,"this is somefile")
   });

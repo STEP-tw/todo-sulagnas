@@ -31,7 +31,7 @@ class postLoginHandler extends DefaultHandler {
       return;
     }
     this.getUserWithSessionId(res,user);
-    this.redirectTo(res,'./viewTodo.html');
+    this.redirectTo(res,'./listTodos.html');
   }
   execute (req,res) {
     this.redirectToRequiredPage(req,res);

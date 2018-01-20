@@ -55,9 +55,9 @@ describe('app',()=>{
     })
   })
   describe.skip('POST /loginPage.html',()=>{
-    it('redirects to viewTodo for valid user',done=>{
+    it('redirects to listTodos for valid user',done=>{
       request(app,{method:'POST',url:'/loginPage.html',body:'userName=sulagna'},res=>{
-        th.should_be_redirected_to(res,'./viewTodo.html');
+        th.should_be_redirected_to(res,'./listTodos.html');
         th.should_not_have_cookie(res,'message');
         done();
       });

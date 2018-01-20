@@ -22,8 +22,8 @@ describe('staticFileHandler',()=>{
       assert.equal(actual,'./public/index.html');
     });
     it('should return complete path of the file if url is other than "/"',()=>{
-      let actual=staticFileHandler.getPath('/viewTodo.html');
-      assert.equal(actual,'./public/viewTodo.html');
+      let actual=staticFileHandler.getPath('/listTodos.html');
+      assert.equal(actual,'./public/listTodos.html');
     });
   });
   describe('getContentType',()=>{

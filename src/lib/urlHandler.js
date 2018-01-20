@@ -3,8 +3,8 @@ let getContentType=require('./contentType.js');
 let fs=require('fs');
 let todoHandler=require('./todoHandler.js');
 
-const redirectToViewTodo=function (res) {
-  res.redirect('./viewTodo.html')
+const redirectToListTodos=function (res) {
+  res.redirect('./listTodos.html')
 };
 
 const redirectToLoginPage=function (res) {
@@ -33,7 +33,7 @@ const redirectToRequiredPage=function (req,res) {
     return;
   }
   getUserWithSessionId(res,user);
-  redirectToViewTodo(res);
+  redirectToListTodos(res);
 };
 
 const handlePostLoginPage=function (req,res) {
@@ -62,7 +62,7 @@ const handlePostAddTodo=function (req,res) {
   let title=req.body.title;
   let description=req.body.description;
   todoHandler.makeNewTodo(title,description);
-  redirectToViewTodo(res);
+  redirectToListTodos(res);
 };
 
 const handlePostViewTodo=function (req,res) {
