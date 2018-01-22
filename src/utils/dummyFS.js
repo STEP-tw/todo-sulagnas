@@ -20,6 +20,13 @@ class DummyFs {
       throw Error(`ENOENT: no such file or directory, open '${filePath}'`)
     }
   }
+  appendFileSync(filePath,contentToAppend){
+    if(this.existsSync(filePath)) {
+      this.files[filePath] += contentToAppend;
+    }else{
+      throw Error(`ENOENT: no such file or directory, open '${filePath}'`)
+    }
+  }
 }
 
 module.exports = DummyFs;
