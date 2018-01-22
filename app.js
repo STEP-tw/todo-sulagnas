@@ -3,7 +3,7 @@ const TodoApp=require('./src/models/todoApp.js');
 const WebApp = require('./webapp');
 const preprocessor=require('./src/lib/preprocessor.js');
 
-const ViewTodoHandler=require('./handlers/ViewTodoHandler.js');
+const ViewTodoHandler=require('./handlers/viewTodoHandler.js');
 const StaticFileHandler=require('./handlers/staticFileHandler.js');
 const ListTodosHandler=require('./handlers/listTodosHandler.js');
 
