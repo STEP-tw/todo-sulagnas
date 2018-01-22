@@ -1,6 +1,6 @@
 let assert = require('chai').assert;
 const TodoApp=require('../src/models/todoApp.js');
-let DummyFs = require('../src/utils/dummyFs.js');
+let DummyFs = require('../src/utils/dummyFS.js');
 
 describe('Todo App',()=>{
   beforeEach(()=>{

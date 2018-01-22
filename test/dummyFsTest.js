@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const DummyFs = require('../src/utils/dummyFs.js');
+const DummyFs = require('../src/utils/dummyFS.js');
 
 describe('dummyFs',()=>{
   beforeEach('create a dummy fs',()=>{
