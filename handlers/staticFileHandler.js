@@ -29,6 +29,7 @@ class staticFileHandler extends DefaultHandler {
   writeContentOfFile(res,path) {
     let content=this.fs.readFileSync(path);
     res.setHeader('Content-Type',this.getContentType(path));
+    res.statusCode=200;
     res.write(content);
     res.end();
   }
@@ -42,7 +43,7 @@ class staticFileHandler extends DefaultHandler {
     try{
       this.writeContentOfFile(res,path);
     }catch(err){
-      console.log(err.message);
+      console.error(err.message);
       this.handleIfFileNotExist(res);
     }
   }

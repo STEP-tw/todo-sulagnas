@@ -70,8 +70,39 @@ describe('staticFileHandler',()=>{
     it('should make statusCode as 404',()=>{
       assert.equal(res.statusCode,404);
     });
+
+
     it('should say "file not found"',()=>{
       assert.equal(res.content,'file not found');
     });
   });
+  describe('execute',()=>{
+    beforeEach(()=>{
+      fs=new DummyFs([{name:'./public/staticFile.html',content:'this is a static file'}]);
+      staticFileHandler=new StaticFileHandler('public',fs);
+      req = {};
+      req.url = "";
+      res = {
+        redirect:function(url){this.url = url;},
+        write:function(text){this.content = text;},
+        setHeader:function(key,value){this.headers[key] = value;},
+        end:()=>{}
+      };
+      res.content = res.url = res.statusCode = "";
+      res.headers = {};
+    });
+    it('will write content of file if it is exists',()=>{
+      req.url = "/staticFile.html";
+      staticFileHandler.execute(req,res);
+      assert.equal(res.content,"this is a static file");
+      assert.equal(res.statusCode,200);
+      assert.deepEqual(res.headers,{'Content-Type':'text/html'});
+    });
+    it(`should respond with 'file not found' if file is not exist`,()=>{
+      req.url = "/bad";
+      staticFileHandler.execute(req,res);
+      assert.equal(res.content,"file not found");
+      assert.equal(res.statusCode,404);
+    })
+  })
 });

@@ -32,7 +32,7 @@ app.use((req,res)=>{
 });
 app.use(preprocessor.redirectLoggedOutUserToLogin);
 
-app.get('/listTodos.html',listTodosHandler.execute);
+app.get('/listTodos.html',listTodosHandler.getRequestHandler());
 app.get('/logout',(req,res)=>{
   let sessionid = req.cookies.sessionid;
   app.sessionManager.removeSessionBy(sessionid);
@@ -40,6 +40,7 @@ app.get('/logout',(req,res)=>{
   res.redirect('/loginPage.html')
   res.end();
 });
+app.get('/viewTodo.html',viewTodoHandler.execute);
 
 app.post('/loginPage.html',(req,res)=>{
   let user = todoApp.getUser(req.body.userName);
@@ -51,8 +52,6 @@ app.post('/loginPage.html',(req,res)=>{
   res.setHeader('Set-Cookie',`sessionid=${session.Id}`);
   res.redirect('./listTodos.html');
 });
-
-app.get('/viewTodo.html',viewTodoHandler.execute);
 
 app.useAsPostProcessor(staticFileHandler.getRequestHandler());
 
