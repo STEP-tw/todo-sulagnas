@@ -3,4 +3,6 @@ node_modules/
 .DS_Store
 data/todo.json
 todoStore.js
+data/userSessions.json
 coverage
+.nyc_output
