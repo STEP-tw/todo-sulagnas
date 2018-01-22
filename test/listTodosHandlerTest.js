@@ -6,7 +6,8 @@ const testHelper = require('./testHelper.js');
 describe('listTodosHandler',()=>{
   beforeEach(()=>{
     fs = new DummyFs([{name:'./public/somefile.html',content:'this is somefile'}]);
-    listTodosHandler = new ListTodosHandler('public',fs);
+    fs.addValidFile({path : './templates/listTodos.html', content: "allTodos"});
+    listTodosHandler = new ListTodosHandler(fs);
     res = {
       redirect:function(url){this.url = url;},
       write:function(text){this.content = text;},
