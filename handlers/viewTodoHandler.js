@@ -1,18 +1,18 @@
-let fs=require('fs');
-let head=fs.readFileSync('./headTodo.txt');
-let tail=fs.readFileSync('./tailTodo.txt');
-
 class ViewTodoHandler {
-  constructor() {
+  constructor(fs) {
+    this.fs=fs || require('fs');
   }
   execute(req,res){
+    let viewTodoTemplate = this.fs.readFileSync('./templates/viewTodo.html','utf8');
     let todoId=req.body.todoId;
     let todo=req.user.getTodo(todoId);
     if(!todo){
       res.write('file not found');
       res.end();
     }
-    res.write(`${head}${todo.toHtml()}${tail}`);
+    let actualTodo = viewTodoTemplate.replace('todoId',todo.title);
+    actualTodo = actualTodo.replace('viewTodo',todo.toHtml());
+    res.write(actualTodo);
     res.end();
   }
 };
