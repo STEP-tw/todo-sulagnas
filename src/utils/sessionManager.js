@@ -1,14 +1,10 @@
 let timeStamp = ()=>new Date().getTime();
 
-let addSession = function(session,sessionManger){
-  sessionManger.loggedInUsers[session.Id] = session;
-  sessionManger.save()
-}
-
 class SessionManager {
-  constructor(filePath,fs) {
+  constructor(filePath,fs,myTimeStamp) {
     this.filePath = filePath;
     this.fs = fs || require('fs');
+    this.timeStamp = myTimeStamp || timeStamp;
   }
   init(){
     if(this.fs.existsSync(this.filePath)){
@@ -21,8 +17,9 @@ class SessionManager {
     this.fs.writeFileSync(this.filePath,JSON.stringify(this.loggedInUsers,null,'\t'),'utf8');
   }
   createSessionFor(user){
-    let session = {Id:timeStamp(),user};
-    addSession(session,this);
+    let session = {Id:this.timeStamp(),user};
+    this.loggedInUsers[session.Id] = session;
+    this.save();
     return session;
   }
   loadSessionBy(id){
@@ -34,8 +31,8 @@ class SessionManager {
   }
 }
 
-SessionManager.createFrom = (filePath,fs)=> {
-  let sm = new SessionManager(filePath,fs);
+SessionManager.createFrom = (filePath,fs,timeStamp)=> {
+  let sm = new SessionManager(filePath,fs,timeStamp);
   sm.init();
   return sm;
 }
