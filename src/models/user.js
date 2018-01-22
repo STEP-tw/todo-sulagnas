@@ -41,6 +41,8 @@ class User {
   editTitle(todoId,newTitle) {
     let oldTodo = this.getTodo(todoId);
     this.addTodo(newTitle,oldTodo.description);
+    let newTodo = this.getTodo(newTitle);
+    newTodo.load(oldTodo.getAllItems());
     this.deleteTodo(todoId);
   }
   editDescription(todoId,newDescription) {
@@ -79,6 +81,15 @@ class User {
     details.userName = this.userName;
     details.todos = this.getAllTodos();
     return details;
+  }
+  toHtmlRow() {
+    let allTodos=this.getAllTodos();
+    let todosAsHtml=`<table>`;
+    allTodos.forEach(todo=>{
+      todosAsHtml+=`<tr><td>${todo.title}</td></tr>`
+    })
+    todosAsHtml += `</table>`
+    return todosAsHtml;
   }
 }
 module.exports=User;

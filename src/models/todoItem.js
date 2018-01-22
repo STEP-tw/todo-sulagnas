@@ -1,3 +1,8 @@
+
+deleteItem = function() {
+  return `${function(){}}`;
+};
+
 class TodoItem {
   constructor(item) {
     this.item=item;
@@ -18,6 +23,12 @@ class TodoItem {
   isDone() {
     return this.done;
   }
+  toHtml() {
+    let deleteButton = `<button onclick=${deleteItem()}>delete<button>`;
+    let editLink=`<a href=''>edit</a>`;
+    return `<tr><td>${this.item}</td><td>${editLink}</td><td>${deleteButton}</td></tr>`
+  }
 }
+
 
 module.exports=TodoItem;

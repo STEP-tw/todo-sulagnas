@@ -35,6 +35,8 @@ class Todo {
   editTodoItem(itemId,editedTodoItem) {
     let item = this.getTodoItem(itemId);
     this.addTodoItem(editedTodoItem);
+    let newItem = this.getTodoItem(editedTodoItem);
+    item.isDone() && newItem.markAsDone();
     this.deleteTodoItem(itemId);
   }
   markAsDone(itemId) {
@@ -59,6 +61,14 @@ class Todo {
     details.description = this.description;
     details.todoItems = this.getAllItems();
     return details;
+  }
+  toHtml(){
+    let itemsAsRows = this.getAllItems().map(item=>item.toHtml()).join("");
+    return `<h1>${this.title}</h1>
+    <h3>${this.description}</h3>
+    <table>
+      ${itemsAsRows}
+    </table>`;
   }
 }
 

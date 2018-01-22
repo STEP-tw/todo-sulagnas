@@ -168,4 +168,25 @@ describe('a user with id,userName,todoList of one or more todos',function () {
       assert.deepEqual(user.getAllTodos(),expected);
     })
   })
+
+  describe('toHtmlRow',()=>{
+    beforeEach(()=>{
+      user=new User('sulagna');
+      let todos = [
+        {
+          'title':'shopping',
+          description:"have to buy things",
+          todoItems:[
+            {item:'buy clothes',done:false},
+            {item:'buy mobile',done:false}
+          ]
+        }
+      ];
+      user.load(todos);
+    })
+    it('should return todo titles in html row',()=>{
+      let expected = '<table><tr><td>shopping</td></tr></table>';
+      assert.equal(user.toHtmlRow(),expected);
+    })
+  })
 })

@@ -35,6 +35,17 @@ describe('dummyFs',()=>{
       let expected = "this is previous content.this is new content";
       fs.appendFileSync('./dummyFile.txt','this is new content');
       assert.equal(fs.readFileSync('./dummyFile.txt'),expected);
+    });
+    it('should throw an error while appending to a file which is not existed',()=>{
+      assert.throws(()=>{
+      fs.appendFileSync('badFile','jbasjkdfnd');
+    });
+    })
+  });
+  describe('addValidFile',()=>{
+    it('should add a file in the memory',()=>{
+      fs.addValidFile({name:'./anotherDummyFile.txt',content:''});
+      assert.isOk('./anotherDummyFile.txt');
     })
   })
 });

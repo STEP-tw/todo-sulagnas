@@ -26,3 +26,14 @@ describe('todoItem can be selected on not selected',function (){
     assert.equal(storyBook.isDone(),false);
   })
 })
+describe('toHtml',()=>{
+  beforeEach(()=>{
+    storyBook=new TodoItem('buy story book');
+  });
+  it('should return the item in html row format',()=>{
+    let deleteButton = `<button onclick=function (){}>delete<button>`;
+    let editLink=`<a href=''>edit</a>`;
+    let expected=`<tr><td>buy story book</td><td>${editLink}</td><td>${deleteButton}</td></tr>`;
+    assert.equal(storyBook.toHtml(),expected);
+  })
+})

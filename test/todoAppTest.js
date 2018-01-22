@@ -1,9 +1,22 @@
 let assert = require('chai').assert;
 const TodoApp=require('../src/models/todoApp.js');
+let DummyFs = require('../src/utils/dummyFs.js');
 
 describe('Todo App',()=>{
   beforeEach(()=>{
-    todoApp = new TodoApp();
+    fs = new DummyFs([{name:'./todos.json',content:`[
+      {
+        "userName": "sulagna",
+        "todos": [
+          {
+            "title": "ujifjdiof",
+            "description": "jgbfhjcgvdhjfuy",
+            "todoItems": []
+          }
+        ]
+      }
+    ]`}])
+    todoApp = new TodoApp(fs);
   });
   describe('addUser',()=>{
     it('should create user with no todos when didnt give any initial todos',()=>{
@@ -30,6 +43,23 @@ describe('Todo App',()=>{
       todoApp.addUser('sulagna');
       let user=todoApp.getUser('sulagna');
       assert.equal(user.userName,'sulagna');
+    })
+  })
+  describe('loadUsers',()=>{
+    it('should load the previous details of user',()=>{
+      let expected = {
+          userName: "sulagna",
+          todos: [
+            {
+              title: "ujifjdiof",
+              description : "jgbfhjcgvdhjfuy",
+              todoItems : []
+            }
+          ]
+        };
+      todoApp.loadUsers('./todos.json');
+      let actual = todoApp.getUser('sulagna').getDetails();
+      assert.deepEqual(actual,expected);
     })
   })
 })

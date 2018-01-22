@@ -16,6 +16,16 @@ describe("a todo with it's id title description todo items and item count",funct
     })
   })
 
+  describe('editTitle',()=>{
+    beforeEach(()=>{
+      shopping=new Todo('shopping','have to buy things');
+    })
+    it('can edit the title of the todo',()=>{
+      shopping.editTitle('shop');
+      assert.equal(shopping.title,'shop');
+    });
+  })
+
   describe('todo item can be added',function () {
     beforeEach(()=>{
       shopping=new Todo('shopping','have to buy things');
@@ -98,4 +108,22 @@ describe("a todo with it's id title description todo items and item count",funct
       assert.deepEqual(shopping.getAllItems(),expected);
     });
   })
+
+  describe('toHtml',()=>{
+    beforeEach(()=>{
+      shopping=new Todo('shopping','have to buy things');
+      shopping.load([{item:'buy clothes',done:false}]);
+    })
+    it('should return the todo in html row format',()=>{
+      let deleteButton = `<button onclick=function (){}>delete<button>`;
+      let editLink=`<a href=''>edit</a>`;
+      let expected =
+    `<h1>shopping</h1>
+    <h3>have to buy things</h3>
+    <table>
+      <tr><td>buy clothes</td><td>${editLink}</td><td>${deleteButton}</td></tr>
+    </table>`;
+      assert.equal(shopping.toHtml(),expected);
+    })
+  });
 })
