@@ -1,22 +1,24 @@
-let fs=require('fs');
-const timeStamp = require('./time.js').timeStamp;
+let actualFs=require('fs');
+const actualTimeStamp = require('./time.js').timeStamp;
 
 let toS = o=>JSON.stringify(o,null,2);
 
-let logRequest = (req,res)=>{
+let logRequest = (req,res,myFs,myTimeStamp)=>{
+  let fs = myFs || actualFs;
+  let timeStamp = myTimeStamp || actualTimeStamp;
   let text = ['------------------------------',
     `${timeStamp()}`,
     `${req.method} ${req.url}`,
     `HEADERS=> ${toS(req.headers)}`,
     `COOKIES=> ${toS(req.cookies)}`,
     `BODY=> ${toS(req.body)}`,''].join('\n');
-  fs.appendFile('request.log',text,()=>{});
+  fs.appendFileSync('request.log',text);
   console.log(`${req.method} ${req.url}`);
 };
 
 let redirectLoggedOutUserToLogin = function(req,res){
-  if(!req.urlIsOneOf(['/loginPage.html','/index.html','/css/styleSheet.css']) && !req.user){
-    res.redirect('./loginPage.html');
+  if(!req.urlIsOneOf(['/loginPage.html','/index.html','/css/styleSheet.css','/']) && !req.user){
+    res.redirect('/loginPage.html');
   }
 }
 

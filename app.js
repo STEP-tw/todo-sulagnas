@@ -37,14 +37,26 @@ app.get('/logout',(req,res)=>{
   let sessionid = req.cookies.sessionid;
   app.sessionManager.removeSessionBy(sessionid);
   res.setHeader('Set-Cookie',`sessionid=0, Expires=${new Date(1).toUTCString()}`);
-  res.redirect('/loginPage.html')
+  res.redirect('/loginPage.html');
   res.end();
 });
 app.get('/viewTodo.html',viewTodoHandler.execute);
 
+app.get('/loginPage.html',(req,res)=>{
+  let message = req.cookies.message;
+  res.setHeader('Content-Type',"text/html");
+  if(message)res.write(message);
+  res.write(`<form method="post" id="form">
+    userName: <input type="text" name ="userName"><br>
+    <input type="submit" value="login"><br>
+  </form>`);
+  res.end()
+})
+
 app.post('/loginPage.html',(req,res)=>{
   let user = todoApp.getUser(req.body.userName);
   if(!user){
+    res.setHeader('Set-Cookie',`message=login failed; Max-Age=3`);
     res.redirect('/loginPage.html');
     return;
   }

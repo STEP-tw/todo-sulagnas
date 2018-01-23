@@ -1,6 +1,6 @@
 
 deleteItem = function() {
-  return `${function(){}}`;
+  return function(){};
 };
 
 class TodoItem {

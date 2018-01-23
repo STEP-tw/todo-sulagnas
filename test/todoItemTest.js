@@ -26,7 +26,7 @@ describe('todoItem can be selected on not selected',function (){
     assert.equal(storyBook.isDone(),false);
   })
 })
-describe('toHtml',()=>{
+describe.skip('toHtml',()=>{
   beforeEach(()=>{
     storyBook=new TodoItem('buy story book');
   });
