@@ -27,8 +27,7 @@ app.use((req,res)=>{
   if(!session){
     return;
   }
-  user = session.user
-  req.user = todoApp.getUser(user.userName);
+  req.user = todoApp.getUser(session.user);
 });
 app.use(preprocessor.redirectLoggedOutUserToLogin);
 
@@ -60,7 +59,7 @@ app.post('/loginPage.html',(req,res)=>{
     res.redirect('/loginPage.html');
     return;
   }
-  let session = app.sessionManager.createSessionFor(user);
+  let session = app.sessionManager.createSessionFor(user.userName);
   res.setHeader('Set-Cookie',`sessionid=${session.Id}`);
   res.redirect('./listTodos.html');
 });
