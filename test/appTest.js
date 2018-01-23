@@ -83,12 +83,13 @@ describe('app',()=>{
   });
   describe('GET /logout',()=>{
     beforeEach(()=>{
-      app.sessionManager.createSessionFor({userName:'sulagna'});
+      app.sessionManager.createSessionFor('sulagna');
     })
     it('redirects to loginPage.html',()=>{
       request(app,{method:'GET',url:'/logout',headers:{'cookie':'sessionid=1234'}},res=>{
         th.should_be_redirected_to(res,'/loginPage.html');
-        th.should_have_expired_cookie(res,'sessionid')
+        console.log(res.headers);
+        th.should_have_expired_cookie(res,'sessionid');
       });
     });
   });

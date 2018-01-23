@@ -8,16 +8,7 @@ describe('sessionManger',()=>{
     fs = new DummyFS([{name:'./todo.json',content:`{
       "1516447754371": {
         "Id": 1516447754371,
-        "user": {
-          "userName": "sulagna",
-          "todos": {
-            "orjiorjf": {
-              "title": "orjiorjf",
-              "description": "frgfr",
-              "todoItems": {}
-            }
-          }
-        }
+        "user": "sulagna"
       }
     }`}]);
   });
@@ -48,13 +39,11 @@ describe('sessionManger',()=>{
       assert.equal(session.Id,1234)
     });
     it('should write into a file',()=>{
-      let session = sm.createSessionFor({userName:"sulagna"});
+      let session = sm.createSessionFor("sulagna");
       let expected = {
         1234:{
           Id:1234,
-          user:{
-            userName : "sulagna"
-          }
+          user: "sulagna"
         }
       };
       let actual = JSON.parse(fs.readFileSync('./todo.json'));
