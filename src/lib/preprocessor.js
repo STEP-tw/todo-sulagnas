@@ -3,7 +3,10 @@ const actualTimeStamp = require('./time.js').timeStamp;
 
 let toS = o=>JSON.stringify(o,null,2);
 
-let logRequest = (req,res,myFs,myTimeStamp)=>{
+let doesIncludes = (list,element)=>list.includes(element);
+
+let logRequest = (req,res,next,myFs,myTimeStamp)=>{
+  console.log("logRequest is called");
   let fs = myFs || actualFs;
   let timeStamp = myTimeStamp || actualTimeStamp;
   let text = ['------------------------------',
@@ -14,12 +17,14 @@ let logRequest = (req,res,myFs,myTimeStamp)=>{
     `BODY=> ${toS(req.body)}`,''].join('\n');
   fs.appendFileSync('request.log',text);
   console.log(`${req.method} ${req.url}`);
+  next();
 };
 
-let redirectLoggedOutUserToLogin = function(req,res){
-  if(!req.urlIsOneOf(['/loginPage.html','/index.html','/css/styleSheet.css','/']) && !req.user){
+let redirectLoggedOutUserToLogin = function(req,res,next){
+  if(!doesIncludes(['/loginPage.html','/index.html','/css/styleSheet.css','/'],req.url) && !req.user){
     res.redirect('/loginPage.html');
   }
+  next();
 }
 
 exports.logRequest=logRequest;

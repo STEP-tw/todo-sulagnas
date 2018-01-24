@@ -1,16 +1,16 @@
-let fs=require('fs');
-const WebApp = require('./webapp');
+const express = require('express');
 const preprocessor=require('./src/lib/preprocessor.js');
 
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+
 const ViewTodoHandler=require('./handlers/viewTodoHandler.js');
-const StaticFileHandler=require('./handlers/staticFileHandler.js');
 const ListTodosHandler=require('./handlers/listTodosHandler.js');
 
 const viewTodoHandler=new ViewTodoHandler();
 const listTodosHandler=new ListTodosHandler();
-const staticFileHandler=new StaticFileHandler('public',fs);
 
-let app = WebApp.create();
+let app = express();
 
 const loadUsers = function(){
   try {
@@ -20,40 +20,56 @@ const loadUsers = function(){
   };
 }
 
-app.init = function(){
-  loadUsers();
-}
-
-app.use(preprocessor.logRequest);
-app.use((req,res)=>{
+const loadUser = (req,res,next)=>{
   let sessionid = req.cookies.sessionid;
   let session = app.sessionManager.loadSessionBy(sessionid);
   if(!session){
+    next();
     return;
   }
   req.user = app.todoApp.getUser(session.user);
-});
-app.use(preprocessor.redirectLoggedOutUserToLogin);
+  next();
+}
 
-app.get('/listTodos.html',listTodosHandler.getRequestHandler());
-app.get('/logout',(req,res)=>{
+const logoutHandler = (req,res)=>{
   let sessionid = req.cookies.sessionid;
   app.sessionManager.removeSessionBy(sessionid);
   res.setHeader('Set-Cookie',`sessionid=0, Expires=${new Date(1).toUTCString()}`);
   res.redirect('/loginPage.html');
   res.end();
-});
+}
+
+app.init = function(){
+  loadUsers();
+}
+
+app.use(express.static('public'));
+
+app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(preprocessor.logRequest);
+
+app.use(loadUser);
+
+app.use(preprocessor.redirectLoggedOutUserToLogin);
+
+
+app.get('/listTodos.html',listTodosHandler.getRequestHandler());
+app.get('/logout',logoutHandler);
 app.get('/viewTodo.html',viewTodoHandler.execute);
 
 app.get('/loginPage.html',(req,res)=>{
-  let message = req.cookies.message;
-  res.setHeader('Content-Type',"text/html");
-  if(message)res.write(message);
-  res.write(`<form method="post" id="form">
+  console.log(`requested for ${req.method} ${req.url}`);
+  let message = req.cookies.message || "";
+  let html = `<form method="post" id="form">
     userName: <input type="text" name ="userName"><br>
     <input type="submit" value="login"><br>
-  </form>`);
-  res.end()
+  </form>`;
+  res.set('Content-Type',"text/html");
+  html = message + html;
+  res.send(html);
 })
 
 app.post('/loginPage.html',(req,res)=>{
@@ -68,6 +84,5 @@ app.post('/loginPage.html',(req,res)=>{
   res.redirect('/listTodos.html');
 });
 
-app.useAsPostProcessor(staticFileHandler.getRequestHandler());
 
 module.exports=app;
