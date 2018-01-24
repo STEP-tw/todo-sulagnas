@@ -4,10 +4,8 @@ const preprocessor=require('./src/lib/preprocessor.js');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const ViewTodoHandler=require('./handlers/viewTodoHandler.js');
 const ListTodosHandler=require('./handlers/listTodosHandler.js');
 
-const viewTodoHandler=new ViewTodoHandler();
 const listTodosHandler=new ListTodosHandler();
 
 let app = express();
@@ -58,8 +56,6 @@ app.use(preprocessor.redirectLoggedOutUserToLogin);
 
 app.get('/listTodos.html',listTodosHandler.getRequestHandler());
 app.get('/logout',logoutHandler);
-app.get('/viewTodo.html',viewTodoHandler.execute);
-
 app.get('/loginPage.html',(req,res)=>{
   console.log(`requested for ${req.method} ${req.url}`);
   let message = req.cookies.message || "";
