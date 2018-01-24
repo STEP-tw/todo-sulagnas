@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const DummyFs = require('../src/utils/dummyFS.js');
+const MockedFs = require('../src/utils/mockedFS.js');
 
 const logRequest = require('../src/lib/preprocessor.js').logRequest;
 const redirectLoggedOutUserToLogin = require('../src/lib/preprocessor.js').redirectLoggedOutUserToLogin;
@@ -7,7 +7,7 @@ const redirectLoggedOutUserToLogin = require('../src/lib/preprocessor.js').redir
 describe('preprocessors',()=>{
   describe('logRequest',()=>{
     beforeEach(()=>{
-      fs=new DummyFs([{name:'request.log',content:''}]);
+      fs=new MockedFs([{name:'request.log',content:''}]);
       req={
         method:'GET',
         url:'/loginPage.html',

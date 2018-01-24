@@ -1,9 +1,9 @@
 const assert = require('chai').assert;
-const DummyFs = require('../src/utils/dummyFS.js');
+const MockedFs = require('../src/utils/mockedFS.js');
 
 describe('dummyFs',()=>{
   beforeEach('create a dummy fs',()=>{
-    fs = new DummyFs([{'name':'./dummyFile.txt','content':''}]);
+    fs = new MockedFs([{'name':'./dummyFile.txt','content':''}]);
   });
   describe('exist or not',()=>{
     it('should return true when asked for an existing file',()=>{
@@ -29,7 +29,7 @@ describe('dummyFs',()=>{
   })
   describe('appendFileSync',()=>{
     beforeEach('create a dummy fs',()=>{
-      fs = new DummyFs([{'name':'./dummyFile.txt','content':'this is previous content.'}]);
+      fs = new MockedFs([{'name':'./dummyFile.txt','content':'this is previous content.'}]);
     });
     it('should append the content to the given file if the file exists',()=>{
       let expected = "this is previous content.this is new content";

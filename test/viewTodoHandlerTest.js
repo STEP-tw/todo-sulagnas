@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const DummyFS = require('../src/utils/dummyFS.js');
+const DummyFS = require('../src/utils/mockedFS.js');
 const ViewTodoHandler = require('../handlers/viewTodoHandler.js');
 
 describe('viewTodoHandler',()=>{

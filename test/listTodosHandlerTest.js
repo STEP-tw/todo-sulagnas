@@ -1,11 +1,11 @@
 const assert = require('chai').assert;
 const ListTodosHandler = require('../handlers/listTodosHandler.js');
-const DummyFs = require('../src/utils/dummyFS.js');
+const MockedFs = require('../src/utils/mockedFS.js');
 const testHelper = require('./testHelper.js');
 
 describe('listTodosHandler',()=>{
   beforeEach(()=>{
-    fs = new DummyFs([{name:'./public/somefile.html',content:'this is somefile'}]);
+    fs = new MockedFs([{name:'./public/somefile.html',content:'this is somefile'}]);
     fs.addValidFile({path : './templates/listTodos.html', content: "allTodos"});
     listTodosHandler = new ListTodosHandler(fs);
     res = {

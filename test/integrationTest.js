@@ -3,7 +3,7 @@ const assert = chai.assert;
 const request = require('supertest');
 const app = require('../app.js');
 const th = require('./testHelper.js');
-const DummyFs = require('../src/utils/dummyFS.js');
+const MockedFs = require('../src/utils/mockedFS.js');
 const SessionManager = require('../src/utils/sessionManager.js');
 const TodoApp = require('../src/models/todoApp.js');
 let doesNotContain = (pattern)=>{
@@ -19,7 +19,7 @@ let doesNotHaveCookies = (res)=>{
 }
 describe('app',()=>{
   beforeEach(()=>{
-    fs = new DummyFs([
+    fs = new MockedFs([
       {name:'./data/userSessions.json',content:"{}"},
       {name:'./data/todo.json',content:`[
         {

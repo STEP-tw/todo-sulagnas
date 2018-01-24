@@ -1,4 +1,4 @@
-const DummyFS=require('../src/utils/dummyFS.js');
+const DummyFS=require('../src/utils/mockedFS.js');
 const SessionManager = require('../src/utils/sessionManager.js');
 const assert = require('chai').assert;
 

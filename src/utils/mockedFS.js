@@ -1,4 +1,4 @@
-class DummyFs {
+class MockedFs {
   constructor(fileContentPairs) {
     this.files = {};
     fileContentPairs.forEach(pair=>this.files[pair.name] = pair.content)
@@ -29,4 +29,4 @@ class DummyFs {
   }
 }
 
-module.exports = DummyFs;
+module.exports = MockedFs;
