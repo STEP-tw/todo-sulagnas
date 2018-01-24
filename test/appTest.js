@@ -5,17 +5,29 @@ const app = require('../app.js');
 const th = require('./testHelper.js');
 const DummyFs = require('../src/utils/dummyFS.js');
 const SessionManager = require('../src/utils/sessionManager.js');
+const TodoApp = require('../src/models/todoApp.js');
 
 describe('app',()=>{
   beforeEach(()=>{
     fs = new DummyFs([
       {name:'./data/userSessions.json',content:"{}"},
-      {name:'./data/todo.json',content:"[{userName:sulagna,todos:[]}]"}
+      {name:'./data/todo.json',content:`[
+        {
+          "userName": "sulagna",
+          "todos": []
+        },
+        {
+          "userName" : "pk",
+          "todos" :[]
+        }
+      ]`}
     ]);
     let timeStamp = function(){
       return 1234;
     }
     app.sessionManager = SessionManager.createFrom('./data/userSessions.json',fs,timeStamp);
+    app.todoApp = new TodoApp('./data/todo.json',fs);
+    app.init();
   });
   describe('GET /bad',()=>{
     it('responds with 302',done=>{
@@ -70,7 +82,7 @@ describe('app',()=>{
   describe('POST /login',()=>{
     it('redirects to listTodos for valid user',()=>{
       request(app,{method:'POST',url:'/loginPage.html',body:'userName=sulagna'},res=>{
-        th.should_be_redirected_to(res,'./listTodos.html');
+        th.should_be_redirected_to(res,'/listTodos.html');
         th.should_not_have_cookie(res,'message');
       });
     });

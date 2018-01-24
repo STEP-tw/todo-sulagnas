@@ -16,7 +16,7 @@ describe('Todo App',()=>{
         ]
       }
     ]`}])
-    todoApp = new TodoApp(fs);
+    todoApp = new TodoApp('./todos.json',fs);
   });
   describe('addUser',()=>{
     it('should create user with no todos when didnt give any initial todos',()=>{

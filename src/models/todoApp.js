@@ -1,9 +1,20 @@
 const User=require('./user.js');
 
 class TodoApp {
-  constructor(fs) {
+  constructor(path,fs) {
+    this.filePath = path;
     this.fs = fs || require('fs')
     this.users = {};
+  }
+  getUsers(){
+    let users = [];
+    Object.keys(this.users).forEach((user)=>{
+      users.push(user.getDetails());
+    });
+    return users;
+  }
+  save(){
+    fs.writeFileSync(this.filePath,this.getUsers());
   }
   addUser(newUserName,todos) {
     let user = new User(newUserName);
@@ -11,11 +22,16 @@ class TodoApp {
     this.users[newUserName] = user;
     return user;
   }
+  addTodo(userId,title,description) {
+    let user=this.getUser(userId);
+    user.addTodo(title,description);
+    this.save();
+  }
   getUser(id) {
     return this.users[id];
   }
-  loadUsers(path){
-    let users = JSON.parse(this.fs.readFileSync(path));
+  loadUsers(){
+    let users = JSON.parse(this.fs.readFileSync(this.filePath));
     users.map((user)=>{
       this.addUser(user.userName,user.todos);
     });

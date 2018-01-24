@@ -1,5 +1,4 @@
 let fs=require('fs');
-const TodoApp=require('./src/models/todoApp.js');
 const WebApp = require('./webapp');
 const preprocessor=require('./src/lib/preprocessor.js');
 
@@ -7,19 +6,24 @@ const ViewTodoHandler=require('./handlers/viewTodoHandler.js');
 const StaticFileHandler=require('./handlers/staticFileHandler.js');
 const ListTodosHandler=require('./handlers/listTodosHandler.js');
 
-const todoApp=new TodoApp();
 const viewTodoHandler=new ViewTodoHandler();
 const listTodosHandler=new ListTodosHandler();
 const staticFileHandler=new StaticFileHandler('public',fs);
 
-try {
-  todoApp.loadUsers('./data/todo.json');
-} catch (e) {
-  console.log("Unable to load users");
+let app = WebApp.create();
+
+const loadUsers = function(){
+  try {
+    app.todoApp.loadUsers();
+  } catch (e) {
+    console.log("Unable to load users",e);
+  };
 }
 
+app.init = function(){
+  loadUsers();
+}
 
-let app = WebApp.create();
 app.use(preprocessor.logRequest);
 app.use((req,res)=>{
   let sessionid = req.cookies.sessionid;
@@ -27,7 +31,7 @@ app.use((req,res)=>{
   if(!session){
     return;
   }
-  req.user = todoApp.getUser(session.user);
+  req.user = app.todoApp.getUser(session.user);
 });
 app.use(preprocessor.redirectLoggedOutUserToLogin);
 
@@ -53,7 +57,7 @@ app.get('/loginPage.html',(req,res)=>{
 })
 
 app.post('/loginPage.html',(req,res)=>{
-  let user = todoApp.getUser(req.body.userName);
+  let user = app.todoApp.getUser(req.body.userName);
   if(!user){
     res.setHeader('Set-Cookie',`message=login failed; Max-Age=3`);
     res.redirect('/loginPage.html');
@@ -61,7 +65,7 @@ app.post('/loginPage.html',(req,res)=>{
   }
   let session = app.sessionManager.createSessionFor(user.userName);
   res.setHeader('Set-Cookie',`sessionid=${session.Id}`);
-  res.redirect('./listTodos.html');
+  res.redirect('/listTodos.html');
 });
 
 app.useAsPostProcessor(staticFileHandler.getRequestHandler());
