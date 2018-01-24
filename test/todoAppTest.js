@@ -1,10 +1,10 @@
 let assert = require('chai').assert;
 const TodoApp=require('../src/models/todoApp.js');
-let DummyFs = require('../src/utils/dummyFS.js');
+let MockedFs = require('../src/utils/mockedFS.js');
 
 describe('Todo App',()=>{
   beforeEach(()=>{
-    fs = new DummyFs([{name:'./todos.json',content:`[
+    fs = new MockedFs([{name:'./todos.json',content:`[
       {
         "userName": "sulagna",
         "todos": [
@@ -38,6 +38,7 @@ describe('Todo App',()=>{
       assert.deepEqual(initialTodos,user.getAllTodos())
     });
   });
+  
   describe('getUser',()=>{
     it('should get the user',()=>{
       todoApp.addUser('sulagna');
