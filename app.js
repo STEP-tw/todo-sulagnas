@@ -67,6 +67,12 @@ app.get('/loginPage.html',(req,res)=>{
   html = message + html;
   res.send(html);
 })
+app.post('/addTodo.html',(req,res)=>{
+  let todo = req.body;
+  app.todoApp.addTodo(req.user.userName,todo.title,todo.description);
+  res.redirect('/listTodos.html');
+  res.end()
+})
 
 app.post('/loginPage.html',(req,res)=>{
   let user = app.todoApp.getUser(req.body.userName);
