@@ -9,7 +9,7 @@ class TodoApp {
   getUsers(){
     let users = [];
     Object.keys(this.users).forEach((user)=>{
-      users.push(user.getDetails());
+      users.push(this.users[user].getDetails());
     });
     return users;
   }

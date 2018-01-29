@@ -17,7 +17,7 @@ describe('Todo App',()=>{
       }
     ]`}])
     todoApp = new TodoApp('./todos.json',fs);
-  });
+  })
   describe('addUser',()=>{
     it('should create user with no todos when didnt give any initial todos',()=>{
       let user = todoApp.addUser('sulagna');
@@ -38,7 +38,14 @@ describe('Todo App',()=>{
       assert.deepEqual(initialTodos,user.getAllTodos())
     });
   });
-  
+  describe('getUsers',()=>{
+    it('should give all users',()=>{
+      todoApp.addUser('sulagna');
+      todoApp.addUser('michael jackson');
+      let expected = [{userName:'sulagna',todos:[]},{userName: "michael jackson",todos:[]}];
+      assert.deepEqual(todoApp.getUsers(),expected);
+    })
+  })
   describe('getUser',()=>{
     it('should get the user',()=>{
       todoApp.addUser('sulagna');
@@ -63,4 +70,15 @@ describe('Todo App',()=>{
       assert.deepEqual(actual,expected);
     })
   })
+  describe('addTodo',()=>{
+    beforeEach(()=>{
+      todoApp.addUser('sulagna');
+      todoApp.addTodo('sulagna','reading book','story book');
+    })
+    it('should add todo to given user',()=>{
+      let user=todoApp.getUser('sulagna');
+      assert.isDefined(user);
+      assert.isDefined(user.getTodo('reading book'));
+    });
+  });
 })
