@@ -129,4 +129,17 @@ describe('app',()=>{
         .end(done);
     });
   });
+  describe('POST /addTodo.html',()=>{
+    beforeEach(()=>{
+      app.sessionManager.createSessionFor('sulagna');
+    });
+    it('should write the todo',(done)=>{
+      request(app)
+        .post('/addTodo.html')
+        .set('cookie',"sessionid=1234")
+        .expect(302)
+        .expect('Location',"/listTodos.html")
+        .end(done);
+    })
+  })
 });

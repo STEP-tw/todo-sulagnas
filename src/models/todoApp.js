@@ -14,7 +14,7 @@ class TodoApp {
     return users;
   }
   save(){
-    this.fs.writeFileSync(this.filePath,this.getUsers());
+    this.fs.writeFileSync(this.filePath,JSON.stringify(this.getUsers(),null,"\t"));
   }
   addUser(newUserName,todos) {
     let user = new User(newUserName);
