@@ -64,11 +64,10 @@ class Todo {
   }
   toHtml(){
     let itemsAsRows = this.getAllItems().map(item=>item.toHtml()).join("");
-    return `<h1>${this.title}</h1>
-    <h3>${this.description}</h3>
-    <table>
+    let items = `<table>
       ${itemsAsRows}
     </table>`;
+    return items;
   }
 }
 

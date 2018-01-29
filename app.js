@@ -75,8 +75,8 @@ app.post('/addTodo.html',(req,res)=>{
 })
 
 app.get('/viewTodo/:id',(req,res)=>{
-  let todo = req.user.getTodo(req.params.id);
-  res.write(todo.toHtml());
+  let todo = app.todoApp.todoToHtml(req.user.userName,req.params.id);
+  res.write(todo);
   res.end();
 })
 app.get('/delete/:id',(req,res)=>{
@@ -99,5 +99,13 @@ app.post('/loginPage.html',(req,res)=>{
   res.redirect('/listTodos.html');
 });
 
+app.post('/addItem.html',(req,res)=>{
+  let item=req.body.title;
+  let todoId = req.body.todoId;
+  let userName = req.user.userName;
+  app.todoApp.addItem(userName,todoId,item);
+  res.redirect(`/viewTodo/${todoId}`);
+  res.end();
+})
 
 module.exports=app;

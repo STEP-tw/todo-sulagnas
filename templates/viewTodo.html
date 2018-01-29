@@ -2,12 +2,24 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>todoId</title>
+    <title>Todo</title>
+    <script type="text/javascript">
+      let showInputBox = ()=>{
+        let input = document.querySelectorAll('.addItem');
+        input.forEach((element)=>{
+          element.classList.remove('hidden');
+        })
+      }
+    </script>
+    <link rel="stylesheet" href="/css/styleSheet.css">
   </head>
   <body>
-    <a href="index.html"> home </a><br>
-    <a href="logout">logout</a>
-    <hr>
-      viewTodo
+    <h1>TodoTitle</h1>
+    <h3>description</h3>
+    <input class="hidden" type="text" name="todoId" value="id"><br>
+    <input id="addItem" class="hidden addItem" type="text" name="item"><br>
+    <input class="hidden addItem" type="button" value="OK"> <input class="hidden addItem" type="button" value="cancel"><br>
+    <label onclick="showInputBox()">add Item</label>
+    allItems
   </body>
 </html>

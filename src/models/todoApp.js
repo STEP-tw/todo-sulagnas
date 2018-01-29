@@ -33,12 +33,27 @@ class TodoApp {
   deleteTodo(userId,todoId) {
     let user=this.getUser(userId);
     user.deleteTodo(todoId);
+    this.save();
+  }
+  addItem(userId,todoId,todoItem) {
+    let user=this.getUser(userId);
+    user.addTodoItem(todoId,todoItem);
+    this.save();
   }
   loadUsers(){
     let users = JSON.parse(this.fs.readFileSync(this.filePath));
     users.map((user)=>{
       this.addUser(user.userName,user.todos);
     });
+  }
+  todoToHtml(user,todoId){
+    let template = this.fs.readFileSync('./templates/viewTodo.html','utf8');
+    let todo = this.getUser(user).getTodo(todoId);
+    template = template.replace("TodoTitle",todo.getTitle());
+    template = template.replace("description",todo.getDescription());
+    template = template.replace("allItems",todo.toHtml());
+    template = template.replace('value="id"',`value = "${todo.getTitle()}"`);
+    return template;
   }
 }
 

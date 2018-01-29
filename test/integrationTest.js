@@ -30,7 +30,9 @@ describe('app',()=>{
           "userName" : "pk",
           "todos" :[]
         }
-      ]`}
+      ]`},
+      {name:'./templates/viewTodo.html',content:`<h1>TodoTitle</h1>
+      <h3>description</h3>`}
     ]);
     let timeStamp = function(){
       return 1234;
