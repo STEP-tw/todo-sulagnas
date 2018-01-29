@@ -79,6 +79,13 @@ app.get('/viewTodo/:id',(req,res)=>{
   res.write(todo.toHtml());
   res.end();
 })
+app.get('/delete/:id',(req,res)=>{
+  let todoId = req.params.id;
+  let userId=req.user.userName;
+  app.todoApp.deleteTodo(userId,todoId);
+  res.redirect('/listTodos.html');
+  res.end();
+})
 
 app.post('/loginPage.html',(req,res)=>{
   let user = app.todoApp.getUser(req.body.userName);

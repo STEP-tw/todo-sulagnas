@@ -185,7 +185,7 @@ describe('a user with id,userName,todoList of one or more todos',function () {
       user.load(todos);
     })
     it('should return todo titles in html row',()=>{
-      let expected = '<table><tr><td><a href="/viewTodo/shopping">shopping</a></td></tr></table>';
+      let expected = '<table><tr><td><a href="/viewTodo/shopping">shopping</a></td><td><a href = "/delete/shopping">delete</a></td></tr></table>';
       assert.equal(user.toHtmlRow(),expected);
     })
   })

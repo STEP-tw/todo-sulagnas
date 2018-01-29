@@ -157,4 +157,18 @@ describe('app',()=>{
         .end(done);
     });
   });
+  describe('GET /delete/todoId',()=>{
+    beforeEach(()=>{
+      app.sessionManager.createSessionFor('sulagna');
+      app.todoApp.addTodo('sulagna','shopping','go to shopping');
+    })
+    it('should delete the todo',(done)=>{
+      request(app)
+        .get('/delete/shopping')
+        .set('cookie','sessionid=1234')
+        .expect(302)
+        .expect('Location','/listTodos.html')
+        .end(done)
+    })
+  })
 });

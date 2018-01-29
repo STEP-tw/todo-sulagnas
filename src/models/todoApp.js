@@ -30,6 +30,10 @@ class TodoApp {
   getUser(id) {
     return this.users[id];
   }
+  deleteTodo(userId,todoId) {
+    let user=this.getUser(userId);
+    user.deleteTodo(todoId);
+  }
   loadUsers(){
     let users = JSON.parse(this.fs.readFileSync(this.filePath));
     users.map((user)=>{

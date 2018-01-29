@@ -1,8 +1,3 @@
-
-deleteItem = function() {
-  return function(){};
-};
-
 class TodoItem {
   constructor(item) {
     this.item=item;

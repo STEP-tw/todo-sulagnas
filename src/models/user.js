@@ -86,7 +86,8 @@ class User {
     let allTodos=this.getAllTodos();
     let todosAsHtml=`<table>`;
     allTodos.forEach(todo=>{
-      todosAsHtml+=`<tr><td><a href="/viewTodo/${todo.title}">${todo.title}</a></td></tr>`
+      let title = todo.title;
+      todosAsHtml+=`<tr><td><a href="/viewTodo/${title}">${title}</a></td><td><a href = "/delete/${title}">delete</a></td></tr>`
     })
     todosAsHtml += `</table>`
     return todosAsHtml;
