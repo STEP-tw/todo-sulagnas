@@ -142,4 +142,19 @@ describe('app',()=>{
         .end(done);
     })
   })
+  describe('GET /viewTodo/todoId',()=>{
+    beforeEach(()=>{
+      app.sessionManager.createSessionFor('sulagna');
+      app.todoApp.addTodo('sulagna','shopping','go to shopping');
+    });
+    it('should give the todo details',(done)=>{
+      request(app)
+        .get('/viewTodo/shopping')
+        .set('cookie',"sessionid=1234")
+        .expect(200)
+        .expect(/shopping/)
+        .expect(/go to shopping/)
+        .end(done);
+    });
+  });
 });

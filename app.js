@@ -74,6 +74,12 @@ app.post('/addTodo.html',(req,res)=>{
   res.end()
 })
 
+app.get('/viewTodo/:id',(req,res)=>{
+  let todo = req.user.getTodo(req.params.id);
+  res.write(todo.toHtml());
+  res.end();
+})
+
 app.post('/loginPage.html',(req,res)=>{
   let user = app.todoApp.getUser(req.body.userName);
   if(!user){
