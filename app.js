@@ -99,8 +99,9 @@ app.post('/loginPage.html',(req,res)=>{
   res.redirect('/listTodos.html');
 });
 
-app.post('/addItem.html',(req,res)=>{
-  let item=req.body.title;
+app.post('/addItem',(req,res)=>{
+  console.log(req.body);
+  let item=req.body.item;
   let todoId = req.body.todoId;
   let userName = req.user.userName;
   app.todoApp.addItem(userName,todoId,item);

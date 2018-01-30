@@ -8,7 +8,13 @@
         let input = document.querySelectorAll('.addItem');
         input.forEach((element)=>{
           element.classList.remove('hidden');
-        })
+        });
+      }
+      let hide = ()=>{
+        let input = document.querySelectorAll('.addItem');
+        input.forEach((element)=>{
+          element.classList.add('hidden');
+        });
       }
     </script>
     <link rel="stylesheet" href="/css/styleSheet.css">
@@ -16,10 +22,13 @@
   <body>
     <h1>TodoTitle</h1>
     <h3>description</h3>
-    <input class="hidden" type="text" name="todoId" value="id"><br>
-    <input id="addItem" class="hidden addItem" type="text" name="item"><br>
-    <input class="hidden addItem" type="button" value="OK"> <input class="hidden addItem" type="button" value="cancel"><br>
-    <label onclick="showInputBox()">add Item</label>
+    <form action="/addItem" method="post">
+      <input class="hidden" type="text" name="todoId" value="id"><br>
+      <input id="addItem" class="hidden addItem" type="text" name="item"><br>
+      <input class="hidden addItem" type="submit" value="OK" onclick="hide()">
+      <input class="hidden addItem" type="reset" value="cancel" onclick="hide()"><br>
+      <label onclick="showInputBox()">add Item</label>
+    </form>
     allItems
   </body>
 </html>

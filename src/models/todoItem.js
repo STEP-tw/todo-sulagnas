@@ -19,9 +19,9 @@ class TodoItem {
     return this.done;
   }
   toHtml() {
-    let deleteButton = `<button onclick=${deleteItem()}>delete<button>`;
     let editLink=`<a href=''>edit</a>`;
-    return `<tr><td>${this.item}</td><td>${editLink}</td><td>${deleteButton}</td></tr>`
+    let deleteItem = `<label>delete</label>`
+    return `<tr><td>${this.item}</td><td>${editLink}</td><td>${deleteItem}</td></tr>`
   }
 }
 
